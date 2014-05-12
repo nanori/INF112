@@ -20,6 +20,8 @@ public class SocialNetwork {
 	 * CONSTRUCTEUR
 	 */
 	public SocialNetwork() {
+		members = new LinkedList<Member>();
+		items = new LinkedList<Item>();
 	}
 
 	/**
@@ -33,7 +35,7 @@ public class SocialNetwork {
 		int i=0;
 		int cptFilms=0;
 		
-		while (i<nbFilms()){
+		while (i<items.size()){
 			if(items.get(i) instanceof Film){
 				cptFilms++;
 			}
@@ -46,7 +48,7 @@ public class SocialNetwork {
 		int i=0;
 		int cptBooks=0;
 		
-		while (i<nbFilms()){
+		while (i<items.size()){
 			if(items.get(i) instanceof Book){
 				cptBooks++;
 			}
