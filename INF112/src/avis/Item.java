@@ -1,6 +1,5 @@
 package avis;
 
-import java.util.Collection;
 import java.util.LinkedList;
 
 public abstract class Item {
@@ -32,7 +31,7 @@ public abstract class Item {
 	}
 
 	public void addReviewToCollection(Avis avis) {
-		this.avis.addlast(avis);
+		this.avis.addLast(avis);
 	}
 	
 	public float getMoyenne(){
