@@ -143,7 +143,6 @@ public class SocialNetwork {
 		
 	}
 
-	
 	public void addItemBook(String pseudo, String password, String titre, String genre, String auteur, int nbPages) throws BadEntry, NotMember, ItemBookAlreadyExists {
 		boolean memberIsFound=false;
 		boolean filmIsFound=false;
@@ -196,7 +195,6 @@ public class SocialNetwork {
 		items.add(tmpBook);
 	}
 
-	
 	public LinkedList<String> consultItems(String nom) throws BadEntry {
 		LinkedList<String> returnList = new LinkedList<String>();
 		int i=0;
