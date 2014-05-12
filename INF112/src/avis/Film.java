@@ -22,5 +22,12 @@ public class Film extends Item {
 	/**
 	 * METHODES
 	 */
-
+	public String toString(){
+		String retour=super.toString() +
+					"Realisateur : " + realisateur + "\n" +
+					"Scenariste : " + scenariste + "\n" +
+					"Duree : " + duree + "\n";
+		
+		return retour;
+	}
 }
