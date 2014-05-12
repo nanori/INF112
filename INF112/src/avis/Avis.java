@@ -14,7 +14,6 @@ public class Avis {
 	 * CONSTRUCTEUR
 	 */
 	public Avis(float note, String commentaire, Item item, Member member) {
-		super();
 		this.note = note;
 		this.commentaire = commentaire;
 		this.item = item;
@@ -24,5 +23,7 @@ public class Avis {
 	/**
 	 * METHODES
 	 */
-
+	public float getNote(){
+		return note;
+	}
 }
