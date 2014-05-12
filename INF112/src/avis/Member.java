@@ -11,21 +11,39 @@ public class Member {
 	private String password;
 	private String profil;
 	private SocialNetwork socialNetwork = null;
-	private Collection avis;
+	private LinkedList <Avis> avis;
 	
 	/**
 	 * CONSTRUCTEUR
 	 */
 	
+	public Member(String pseudo, String password, String profil, SocialNetwork socialNetwork){
+		this.pseudo=pseudo;
+		this.password=password;
+		this.profil=profil;
+		this.socialNetwork = socialNetwork;
+		avis = new LinkedList<Avis>();
+	}
+	
 	/**
 	 * METHODES
 	 */
+	
 	public boolean exists(String pseudo, String password) {
-
-		return false;
+		
+		if(this.pseudo.trim().equalsIgnoreCase(pseudo) && this.password==password){
+			return true;
+		}else{ 
+			return false;
+		}
+	}
+	
+	public boolean exists(String pseudo){
+		return this.pseudo.trim().equalsIgnoreCase(pseudo);
 	}
 
 	public void addReviewToCollection(Avis avis) {
+		this.avis.addLast(avis);
 	}
 
 }
