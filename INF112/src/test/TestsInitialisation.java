@@ -11,12 +11,6 @@ import exception.MemberAlreadyExists;
 import exception.NotItem;
 import exception.NotMember;
 
-/** 
- * @author B. Prou
- * @date mars 2011
- * @version V0.6
- */
-
 public class TestsInitialisation {
 
 

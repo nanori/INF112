@@ -39,7 +39,7 @@ public class Member {
 	}
 	
 	public boolean exists(String pseudo){
-		return this.pseudo.trim().equalsIgnoreCase(pseudo);
+		return this.pseudo.equalsIgnoreCase(pseudo.trim());
 	}
 
 	public void addReviewToCollection(Avis avis) {

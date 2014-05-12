@@ -58,10 +58,10 @@ public class SocialNetwork {
 	}
 
 	public void addMember(String pseudo, String password, String profil) throws BadEntry, MemberAlreadyExists {
-
+		
 		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
 		// composé uniquement de blancs
-		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p+")) {
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?")) {
 			throw new BadEntry("Invalid username");
 		}
 
@@ -77,14 +77,14 @@ public class SocialNetwork {
 		}
 
 		int i = 0;
-		boolean memberFound = false;
-		while (!memberFound && i < members.size()) {
-			memberFound = members.get(i).exists(pseudo);
+		boolean memberIsFound = false;
+		while (!memberIsFound && i < nbMembers()) {
+			memberIsFound = members.get(i).exists(pseudo);
 			i++;
 		}
 
 		// si membre de meme pseudo existant
-		if (memberFound) {
+		if (memberIsFound) {
 			throw new MemberAlreadyExists();
 		}
 
