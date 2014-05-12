@@ -49,4 +49,5 @@ public abstract class Item {
 					"Genre : " + genre + "\n";
 		
 		return retour;
+	}
 }
