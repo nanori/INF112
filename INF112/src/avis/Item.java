@@ -44,4 +44,10 @@ public abstract class Item {
 		
 		return moy;
 	}
+	
+	public String toString(){
+		String retour="Titre : " + titre + "\n" +
+					"Genre : " + genre + "\n";
+		
+		return retour;
 }
