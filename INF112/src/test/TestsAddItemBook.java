@@ -4,6 +4,7 @@ import avis.SocialNetwork;
 import exception.BadEntry;
 import exception.ItemBookAlreadyExists;
 import exception.MemberAlreadyExists;
+import exception.NotMember;
 
 public class TestsAddItemBook {
 	
@@ -98,7 +99,7 @@ public class TestsAddItemBook {
 			System.out.println ("Test " + idTest + " : " + messErreur);
 			cptErr++;
 		}
-		catch (ItemBookAlreadyExists e) {
+		catch (NotMember e) {
 			if (sn.nbBooks() != nbLivres){
 				System.out.println("Test " + idTest + " : l'exception ItemBookAlreadyExists a bien été levée mais le nombre de livres a été modifié");
 				cptErr++;

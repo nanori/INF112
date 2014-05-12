@@ -117,7 +117,7 @@ public class SocialNetwork {
 		if(scenariste==null)
 			throw new BadEntry("Invalid scriptwriter");
 				
-		if(duree == 0)
+		if(duree <= 0)
 			throw new BadEntry("Invalid running time");
 		
 		
@@ -168,8 +168,8 @@ public class SocialNetwork {
 		if(auteur==null)
 			throw new BadEntry("Invalid director");
 		
-		if(nbPages == 0)
-			throw new BadEntry("Invalid running time");
+		if(nbPages <= 0)
+			throw new BadEntry("Invalid page number");
 		
 		
 		//Test du couple pseudo/password
@@ -184,13 +184,14 @@ public class SocialNetwork {
 		
 		//Test de l'existance de l'item
 		i=0;
-		while (!filmIsFound && i<nbFilms()){
+		while (!filmIsFound && i<nbBooks()){
 			if(items.get(i) instanceof Book){
 				tmpBook = (Book)items.get(i);
-				if(!tmpBook.exists(titre)){
+				if(tmpBook.exists(titre)){
 					throw new ItemBookAlreadyExists();
 				}
 			}
+			i++;
 		}
 		
 		//Ajout du film

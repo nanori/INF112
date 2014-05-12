@@ -25,7 +25,7 @@ public abstract class Item {
 	 * METHODES
 	 */
 	public boolean exists(String titre) {
-		if(this.titre.trim().equalsIgnoreCase(titre))
+		if(this.titre.equalsIgnoreCase(titre.trim()))
 			return true;
 		
 		return false;
