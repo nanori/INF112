@@ -7,7 +7,7 @@ public abstract class Item {
 	/**
 	 * ATTRIBUTS
 	 */
-	//bidon
+
 	private String titre;
 	private String genre;
 	private LinkedList<Avis> avis;
