@@ -217,7 +217,70 @@ public class SocialNetwork {
 	}
 
 	public float reviewItemFilm(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
-		return 0.0f;
+
+		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
+		// composé uniquement de blancs
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p+")) {
+			throw new BadEntry("Invalid username");
+		}
+
+		// password non instancié OU taille inferieure a 4 (leading et trailing
+		// blanks ignorés)
+		if (password == null || password.trim().length() < 4) {
+			throw new BadEntry("Invalid password");
+		}
+		
+		
+		//titre non instancié ou ou moins de 4 caracteres autres que espaces
+		if (titre==null || titre.trim().length() < 4) {
+			throw new BadEntry("Invalid title");
+		}
+		
+		//note en dehors de [0.0, 5.0]
+		if (note < 0.0 || note > 5.0) {
+			throw new BadEntry("Invalid grade");
+		}
+		
+		//commentaire non instancié
+		if (commentaire == null) {
+			throw new BadEntry("Invalid comment");
+		}
+		
+		//pseudo et password ne correspondent pas ou pseudo n'existe pas
+		int i = 0;
+		boolean memberIsFound = false;
+		Member member = null;
+		while (!memberIsFound && i < members.size()) {
+			// si membre inconnu
+			memberIsFound = members.get(i).exists(pseudo, password);
+			member = members.get(i);
+			i++;
+		}
+		if(!memberIsFound){
+			throw new NotMember("Member does not exist");
+		}
+
+		//titre film
+		i = 0;
+		boolean filmIsFound = false;
+		Item item = null;
+		while (!filmIsFound && i < nbFilms()) {
+			if (items.get(i) instanceof Film) {
+				filmIsFound=items.get(i).exists(titre);				
+				item = items.get(i);
+			}
+			i++;
+		}
+		if(!filmIsFound){
+			throw new NotItem("Film does not exist");
+		}
+		
+		
+		
+		Avis avis = new Avis(note, commentaire, item, member);
+		item.addReviewToCollection(avis);
+		
+		return item.getMoyenne();
 	}
 
 	public float reviewItemBook(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
