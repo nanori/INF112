@@ -56,7 +56,38 @@ public class SocialNetwork {
 	}
 
 	public void addMember(String pseudo, String password, String profil) throws BadEntry, MemberAlreadyExists {
-		
+
+		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
+		// composé uniquement de blancs
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p+")) {
+			throw new BadEntry("Invalid username");
+		}
+
+		// password non instancié OU taille inferieure a 4 (leading et trailing
+		// blanks ignorés)
+		if (password == null || password.trim().length() < 4) {
+			throw new BadEntry("Invalid password");
+		}
+
+		// profil non instancié
+		if (profil == null) {
+			throw new BadEntry("Invalid profile");
+		}
+
+		int i = 0;
+		boolean memberFound = false;
+		while (!memberFound && i < members.size()) {
+			memberFound = members.get(i).exists(pseudo);
+			i++;
+		}
+
+		// si membre de meme pseudo existant
+		if (memberFound) {
+			throw new MemberAlreadyExists();
+		}
+
+		Member membre = new Member(pseudo, password, profil, this);
+		members.addLast(membre);
 	}
 
 	public void addItemFilm(String pseudo, String password, String titre, String genre, String realisateur, String scenariste, int duree) throws BadEntry, NotMember, ItemFilmAlreadyExists {
