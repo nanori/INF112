@@ -32,6 +32,16 @@ public abstract class Item {
 	}
 
 	public void addReviewToCollection(Avis avis) {
+		this.avis.addlast(avis);
 	}
-
+	
+	public float getMoyenne(){
+		float moy=0;
+		for(int i=0; i<avis.size(); i++){
+			moy+=avis.get(i).getNote();
+		}
+		moy = moy / avis.size();
+		
+		return moy;
+	}
 }
