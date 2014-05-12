@@ -352,18 +352,18 @@ public class SocialNetwork {
 		
 		retour="Social Network : \n" +
 				"Les membres: \n";
-		for(int i=0; i<nbMembres; i++) {
+		for(int i=0; i<nbMembers(); i++) {
 			retour += members.get(i).toString();
 		}
 		retour += "Les films : \n";		
-		for(int i=0; i<nbItem; i++) {
-			if(item.get(i) instanceof Film){
+		for(int i=0; i<items.size(); i++) {
+			if(items.get(i) instanceof Film){
 				retour += items.get(i).toString();
 			}
 		}
 		retour += "Les livres : \n";		
-		for(int i=0; i<nbItem; i++) {
-			if(item.get(i) instanceof Book){
+		for(int i=0; i<items.size(); i++) {
+			if(items.get(i) instanceof Book){
 				retour += items.get(i).toString();
 			}
 		}
