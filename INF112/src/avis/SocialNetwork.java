@@ -288,7 +288,26 @@ public class SocialNetwork {
 	}
 
 	public String toString() {
-		return "";
+		String retour;
+		
+		retour="Social Network : \n" +
+				"Les membres: \n";
+		for(int i=0; i<nbMembres; i++) {
+			retour += members.get(i).toString();
+		}
+		retour += "Les films : \n";		
+		for(int i=0; i<nbItem; i++) {
+			if(item.get(i) instanceof Film){
+				retour += items.get(i).toString();
+			}
+		}
+		retour += "Les livres : \n";		
+		for(int i=0; i<nbItem; i++) {
+			if(item.get(i) instanceof Book){
+				retour += items.get(i).toString();
+			}
+		}
+		return retour;
 	}
 
 }
