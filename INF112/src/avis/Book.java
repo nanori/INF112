@@ -21,4 +21,11 @@ public class Book extends Item {
 	/**
 	 * METHODES
 	 */
+	public String toString(){
+		String retour=super.toString() +
+					"Auteur : " + auteur + "\n" +
+					"Nombre pages : " + nbPages + "\n";
+		
+		return retour;
+	}
 }
