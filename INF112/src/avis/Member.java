@@ -45,5 +45,12 @@ public class Member {
 	public void addReviewToCollection(Avis avis) {
 		this.avis.addLast(avis);
 	}
+	
+	public String toString(){
+		String retour="Pseudo : " + pseudo + "\n" +
+				"Profil : "+ profil + "\n";
+		
+		return retour;
+	}
 
 }
