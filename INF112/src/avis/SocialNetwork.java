@@ -94,7 +94,6 @@ public class SocialNetwork {
 
 	public void addItemFilm(String pseudo, String password, String titre, String genre, String realisateur, String scenariste, int duree) throws BadEntry, NotMember, ItemFilmAlreadyExists {
 		//Variables
-		boolean memberIsFound=false;
 		boolean filmIsFound=false;
 		int i=0;
 		
@@ -141,7 +140,6 @@ public class SocialNetwork {
 	}
 
 	public void addItemBook(String pseudo, String password, String titre, String genre, String auteur, int nbPages) throws BadEntry, NotMember, ItemBookAlreadyExists {
-		boolean memberIsFound=false;
 		boolean filmIsFound=false;
 		Book tmpBook;
 		int i=0;
