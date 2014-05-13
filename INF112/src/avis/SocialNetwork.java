@@ -138,6 +138,7 @@ public class SocialNetwork {
 					throw new ItemFilmAlreadyExists();
 				}
 			}
+			i++;
 		}
 		
 		//Ajout du film
