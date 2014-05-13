@@ -212,6 +212,7 @@ public class SocialNetwork {
 			if(items.get(i).exists(nom)){
 				returnList.add(items.get(i).toString());
 			}
+			i++;
 		}
 		
 		return returnList;
