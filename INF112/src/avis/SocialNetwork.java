@@ -120,15 +120,9 @@ public class SocialNetwork {
 		if(duree <= 0)
 			throw new BadEntry("Invalid running time");
 		
-		
-		//Test du couple pseudo/password
-		while (!memberIsFound && i<nbMembers()){
-			memberIsFound=members.get(i).exists(pseudo, password);
-			i++;
-		}
-		if(!memberIsFound)
+		//Authentification
+		if(authentication(pseudo, password)==null)
 			throw new NotMember("Member does not exist");
-		
 		
 		//Test de l'existance de l'item
 		i=0;
@@ -171,16 +165,10 @@ public class SocialNetwork {
 		if(nbPages <= 0)
 			throw new BadEntry("Invalid page number");
 		
-		
-		//Test du couple pseudo/password
-		while (!memberIsFound && i<nbMembers()){
-			memberIsFound=members.get(i).exists(pseudo, password);
-			i++;
-		}
-		
-		if(!memberIsFound)
+		//Authentification
+		if(authentication(pseudo, password)==null)
 			throw new NotMember("Member does not exist");
-		
+				
 		
 		//Test de l'existance de l'item
 		i=0;
@@ -251,15 +239,9 @@ public class SocialNetwork {
 		
 		//pseudo et password ne correspondent pas ou pseudo n'existe pas
 		int i = 0;
-		boolean memberIsFound = false;
-		Member member = null;
-		while (!memberIsFound && i < members.size()) {
-			// si membre inconnu
-			memberIsFound = members.get(i).exists(pseudo, password);
-			member = members.get(i);
-			i++;
-		}
-		if(!memberIsFound){
+		
+		Member member = authentication(pseudo, password);
+		if(member==null){
 			throw new NotMember("Member does not exist");
 		}
 
@@ -317,15 +299,8 @@ public class SocialNetwork {
 				
 		//pseudo et password ne correspondent pas ou pseudo n'existe pas
 		int i = 0;
-		boolean memberIsFound = false;
-		Member member = null;
-		while (!memberIsFound && i < members.size()) {
-			// si membre inconnu
-			memberIsFound = members.get(i).exists(pseudo, password);
-			member = members.get(i);
-			i++;
-		}
-		if(!memberIsFound){
+		Member member = authentication(pseudo, password);
+		if(member==null){
 			throw new NotMember("Member does not exist");
 		}
 
@@ -350,6 +325,21 @@ public class SocialNetwork {
 		return item.getMoyenne();
 	}
 
+	private Member authentication(String pseudo, String password){
+		boolean memberIsFound = false;
+		Member m = null;
+		int i=0;
+		while (!memberIsFound && i<nbMembers()){
+			memberIsFound=members.get(i).exists(pseudo, password);
+			if (memberIsFound)
+				m=members.get(i);
+			
+			i++;
+		}
+		
+		return m;
+	}
+	
 	public String toString() {
 		String retour;
 		
