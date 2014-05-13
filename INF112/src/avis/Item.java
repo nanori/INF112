@@ -2,19 +2,48 @@ package avis;
 
 import java.util.LinkedList;
 
+/**
+ * @author Yannick LUCET
+ * @author Tom VEILLARD
+ */
+
 public abstract class Item {
-
+	
 	/**
-	 * ATTRIBUTS
+	 * Le titre de l'item
+	 * 
+	 * @see Item#Item(String, String)
+	 * @see Item#exists(String)
 	 */
-
 	private String titre;
+	
+	/**
+	 * Le genre de l'item
+	 * 
+	 * @see Item#Item(String, String)
+	 */
 	private String genre;
+	
+	/**
+	 * Liste contenant les avis sur l'item
+	 */
 	private LinkedList<Avis> avis;
+	
+	/**
+	 * Le socialNetwork
+	 */
 	private SocialNetwork socialNetwork = null;
 
+	
 	/**
-	 * CONSTRUCTEUR
+	 * Constructeur Item
+	 * <br>
+	 * A la construction d'un item, la liste avis est instanciée avec une liste vide.
+	 * 
+	 * @param titre
+	 * 			Le titre de l'item à créer
+	 * @param genre
+	 * 			le genre de l'item créer
 	 */
 	public Item (String titre, String genre){
 		this.avis = new LinkedList<Avis>();
@@ -22,8 +51,18 @@ public abstract class Item {
 		this.genre=genre;
 	}
 	
+		
 	/**
-	 * METHODES
+	 * Test si le titre en parametre correspond au titre de l'item.
+	 * <br>
+	 * Les espaces avant et apres le titre en parametre sont ignorés. La methode n'est pas sensible à la casse 
+	 * 
+	 * 
+	 * @param titre
+	 * 			Titre de l'item à tester
+	 * @return 
+	 * 			Vrai si les deux titres correspondent. <br>
+	 * 			Faux si non
 	 */
 	public boolean exists(String titre) {
 		if(this.titre.equalsIgnoreCase(titre.trim()))
@@ -32,10 +71,22 @@ public abstract class Item {
 		return false;
 	}
 
+	/**
+	 * Ajoute un avis à la LinkedList avis
+	 * 
+	 * @param avis
+	 * 			Avis à ajouter
+	 */
 	public void addReviewToCollection(Avis avis) {
 		this.avis.addLast(avis);
 	}
 	
+	/**
+	 * Calcul et retourne la moyenne des notes sur l'item
+	 * 
+	 * @return
+	 * 			Moyenne des notes de l'item
+	 */
 	public float getMoyenne(){
 		float moy=0;
 		for(int i=0; i<avis.size(); i++){
