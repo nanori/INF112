@@ -7,6 +7,8 @@ public class TestsSocialNetwork {
 	TestsAddMember.main(new String [0]);
 	TestsAddItemBook.main(new String [0]);
 	TestsReviewItemBook.main(new String [0]);
+	TestsAddItemFilm.main(new String [0]);
+	TestsReviewItemFilm.main(new String [0]);
 
 	
 	}

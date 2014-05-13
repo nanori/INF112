@@ -119,7 +119,7 @@ public class TestsReviewItemFilm {
 		reviewItemFilmNotItem(sn, "Jean", "123456", "Le Cid", 4.5f, "Hic!", "3.1", "L'ajout d'un avis avec un titre n'existant pas est accepte");
 
 		// Tests sans levée d'exception attendue
-		reviewItemFilmOK(sn, "Jean", "123456", "Le Cidre", 4.5f, "Hic!", "4.1", "");
+		reviewItemFilmOK(sn, "Jean", "123456", "BoomBoom", 4.5f, "Hic!", "4.1", "");
 
 		System.out.println("***************************");
 		System.out.println("***************************");
