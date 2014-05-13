@@ -21,6 +21,10 @@ public class Member {
 	 * Profil du membre
 	 */
 	private String profil;
+	
+	/**
+	 * Le SocialNetwork
+	 */
 	private SocialNetwork socialNetwork = null;
 	
 	/**
