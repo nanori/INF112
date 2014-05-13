@@ -13,11 +13,11 @@ public class TestsReviewItemBook {
 
 		try {
 			sn.reviewItemBook(pseudo, password, titre, note, commentaire);
+			System.out.println("Test " + idTest + " : " + messErreur);
 			// Exception non levée
 			cptErr++;
 		} catch (NotItem e) {
 			// Exception NotItem levée
-			System.out.println("Test " + idTest + " : " + messErreur);
 			cptOk++;
 		} catch (Exception e) {
 			// Mauvaise exception levée
@@ -32,11 +32,12 @@ public class TestsReviewItemBook {
 
 		try {
 			sn.reviewItemBook(pseudo, password, titre, note, commentaire);
+			System.out.println("Test " + idTest + " : " + messErreur);
 			// Exception non levée
 			cptErr++;
 		} catch (NotMember e) {
 			// Exception NotMember levée
-			System.out.println("Test " + idTest + " : " + messErreur);
+			
 			cptOk++;
 		} catch (Exception e) {
 			// Mauvaise exception levée
@@ -51,11 +52,12 @@ public class TestsReviewItemBook {
 
 		try {
 			sn.reviewItemBook(pseudo, password, titre, note, commentaire);
+			System.out.println("Test " + idTest + " : " + messErreur);
 			// Exception non levée
 			cptErr++;
 		} catch (BadEntry e) {
 			// Exception BadEntry levée
-			System.out.println("Test " + idTest + " : " + messErreur);
+			
 			cptOk++;
 		} catch (Exception e) {
 			// Mauvaise exception levée

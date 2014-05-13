@@ -17,6 +17,7 @@ public abstract class Item {
 	 * CONSTRUCTEUR
 	 */
 	public Item (String titre, String genre){
+		this.avis = new LinkedList<Avis>();
 		this.titre=titre;
 		this.genre=genre;
 	}

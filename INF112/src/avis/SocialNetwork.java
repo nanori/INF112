@@ -221,7 +221,7 @@ public class SocialNetwork {
 
 		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
 		// composé uniquement de blancs
-		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p+")) {
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?")) {
 			throw new BadEntry("Invalid username");
 		}
 
@@ -287,7 +287,7 @@ public class SocialNetwork {
 	public float reviewItemBook(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
 		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
 		// composé uniquement de blancs
-		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p+")) {
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?")) {
 			throw new BadEntry("Invalid username");
 		}
 
