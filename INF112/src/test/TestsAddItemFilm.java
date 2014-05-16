@@ -114,8 +114,8 @@ public class TestsAddItemFilm {
 	
 	public static void main(String[] args) {
 
-		int nbfilms = 0;
 		int nbFilms = 0;
+
 
 		System.out.println("Tests: ajouter des films au réseau social");
 
@@ -124,7 +124,6 @@ public class TestsAddItemFilm {
 
 		// tests de addItemFilm
 		nbFilms = sn.nbFilms();
-		nbfilms = sn.nbFilms();
 
 		try {
 			sn.addMember ("geubeutreu", "123456", "psychopathe");
@@ -174,11 +173,7 @@ public class TestsAddItemFilm {
 		
 		
 		//Verification finale
-		
-		if (nbFilms != sn.nbFilms()) {
-			System.out.println("Erreur 5.1 :  le nombre de films aprés utilisation de addMember a été modifié");
-		}
-		if (nbfilms +3 != sn.nbFilms()) {
+		if (nbFilms +2 != sn.nbFilms()) {
 			System.out.println("Erreur 5.2 :  le nombre de films aprés utilisation de addMember a été modifié");				
 		}
 
