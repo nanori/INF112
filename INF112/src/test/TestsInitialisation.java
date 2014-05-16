@@ -21,23 +21,23 @@ public class TestsInitialisation {
 		int nbLivres = 0;
 		int nbFilms = 0;
 		
-		System.out.println("Tests  initialisation  rÃ©seau social  ");
+		System.out.println("Tests  initialisation  réseau social  ");
 	
 		
 		try {
 
-			// un rÃ©seau social crÃ©Ã© ne doit avoir ni membres ni items
+			// un réseau social créé ne doit avoir ni membres ni items
 			SocialNetwork sn = new SocialNetwork();
 			if (sn.nbMembers()!= 0) {
-				System.out.println("Erreur 1.1 :  le nombre de membres aprÃ¨s crÃ©ation du rÃ©seau est non nul");
+				System.out.println("Erreur 1.1 :  le nombre de membres après création du réseau est non nul");
 				System.exit(1);
 			}
 			if (sn.nbBooks() != 0) {
-				System.out.println("Erreur 1.2 : le nombre de livres aprÃ¨s crÃ©ation du rÃ©seau est non nul");
+				System.out.println("Erreur 1.2 : le nombre de livres après création du réseau est non nul");
 				System.exit(1);
 			}
 			if (sn.nbFilms() != 0) {
-				System.out.println("Erreur 1.2 : le nombre de films aprÃ¨s crÃ©ation du rÃ©seau est non nul");
+				System.out.println("Erreur 1.2 : le nombre de films après création du réseau est non nul");
 				System.exit(1);
 			}
 
@@ -46,7 +46,7 @@ public class TestsInitialisation {
 			
 		}
 		catch (Exception e) {
-			System.out.println("Exception non prÃ©vue : " + e);
+			System.out.println("Exception non prévue : " + e);
 			e.printStackTrace();
 		}
 	}

@@ -21,7 +21,7 @@ public class TestsAddItemFilm {
 	public static void addItemFilmBadEntryTest (SocialNetwork sn, String pseudo, String password, String titre, String genre, String realisateur, String scenariste, int duree, String idTest, String messErreur){
 		// vérifie que l'ajout d'un film est refusée (levée de l'exception BadEntry et pas de modification du sn)
 		// si c'est bien le cas, ne fait rien
-		// sinon, affiche le message d'erreur passé en paramÃ¨tre
+		// sinon, affiche le message d'erreur passé en parametre
 		int nbfilms = sn.nbFilms();
 		try {
 			sn.addItemFilm(pseudo, password, titre, genre, realisateur, scenariste, duree);
@@ -127,7 +127,7 @@ public class TestsAddItemFilm {
 
 		try {
 			sn.addMember ("geubeutreu", "123456", "psychopathe");
-			sn.addMember ("Jean", "123456", "schizophrÃ¨ne impulsif");
+			sn.addMember ("Jean", "123456", "schizophrene impulsif");
 		} catch (BadEntry e) {
 			e.printStackTrace();
 		} catch (MemberAlreadyExists e) {

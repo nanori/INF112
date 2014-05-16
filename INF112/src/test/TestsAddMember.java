@@ -22,28 +22,28 @@ public class TestsAddMember {
 	
 
 	public static void addMemberBadEntryTest (SocialNetwork sn, String pseudo, String pwd, String profil, String idTest, String messErreur){
-		// v√©rifie que l'ajout d'un membre (pseudo, pwd, profil) est refus√©e (lev√©e de l'exception BadEntry et  pas de modification du sn)
+		// verifie que l'ajout d'un membre (pseudo, pwd, profil) est refusee (levÈe de l'exception BadEntry et  pas de modification du sn)
 		// si c'est bien le cas, ne fait rien
-		// sinon, affiche le message d'erreur pass√© en param√®tre
+		// sinon, affiche le message d'erreur passe en parametre
 		int nbMembres = sn.nbMembers();
 		try {
 			sn.addMember (pseudo, pwd, profil);
 			System.out.println ("Test " + idTest + " : " + messErreur);
 		}
 		catch (BadEntry e) {
-			if (sn.nbMembers() != nbMembres) System.out.println("Test " + idTest + " : l'exception BadEntry a bien √©t√© lev√©e mais le nombre de membres a √©t√© modifi√©");
+			if (sn.nbMembers() != nbMembres) System.out.println("Test " + idTest + " : l'exception BadEntry a bien ÈtÈ levÈe mais le nombre de membres a ÈtÈ modifiÈ");
 			// else : OK
 		}
-		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non pr√©vue. " + e); e.printStackTrace();}
+		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non prÈvue. " + e); e.printStackTrace();}
 	}
 
 	public static void addMemberOKTest (SocialNetwork sn, String pseudo, String pwd, String profil, String idTest){
 		int nbMembres = sn.nbMembers();
 		try{
 			sn.addMember (pseudo, pwd, profil);
-			if (sn.nbMembers() != nbMembres+1) System.out.println("Test " + idTest + " :  le nombre de membres n'a pas √©t√© correctement incr√©ment√©");
+			if (sn.nbMembers() != nbMembres+1) System.out.println("Test " + idTest + " :  le nombre de membres n'a pas ÈtÈ correctement incrÈmentÈ");
 		}
-		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non pr√©vue. " + e); e.printStackTrace();}
+		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non prÈvue. " + e); e.printStackTrace();}
 	}
 
 	public static void addMemberAlreadyExistsTest (SocialNetwork sn, String pseudo, String pwd, String profil, String idTest, String messErreur){
@@ -53,10 +53,10 @@ public class TestsAddMember {
 			System.out.println ("Test " + idTest + " : " + messErreur);
 		}
 		catch (MemberAlreadyExists e) {
-			if (sn.nbMembers() != nbMembres) System.out.println("Test " + idTest + " : l'exception MemberAlreadyExists a bien √©t√© lev√©e mais le nombre de membres a √©t√© modifi√©");
+			if (sn.nbMembers() != nbMembres) System.out.println("Test " + idTest + " : l'exception MemberAlreadyExists a bien ÈtÈ levÈe mais le nombre de membres a ÈtÈ modifiÈ");
 			// else : OK
 		}
-		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non pr√©vue. " + e); e.printStackTrace();}
+		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non prÈvue. " + e); e.printStackTrace();}
 	}
 
 
@@ -69,7 +69,7 @@ public class TestsAddMember {
 		int nbLivres = 0;
 		int nbFilms = 0;
 
-		System.out.println("Tests  ajouter des membres au r√©seau social  ");
+		System.out.println("Tests  ajouter des membres au rÈseau social  ");
 
 
 		SocialNetwork sn = new SocialNetwork();
@@ -78,39 +78,39 @@ public class TestsAddMember {
 		nbFilms = sn.nbFilms();
 		nbLivres = sn.nbBooks();
 
-		// <=> fiche num√©ro 1
+		// <=> fiche numÈro 1
 
-		// tentative d'ajout de membres avec entr√©es "incorrectes"
+		// tentative d'ajout de membres avec entrÈes "incorrectes"
 
-		addMemberBadEntryTest ( sn, null, "qsdfgh", "", "3.1", "L'ajout d'un membre dont le pseudo n'est pas instanci√© est accept√©");
-		addMemberBadEntryTest ( sn, " ", "qsdfgh", "", "3.2", "L'ajout d'un membre dont le pseudo ne contient pas un caracteres, autre que des espaces, est accept√©");
-		addMemberBadEntryTest ( sn, "B", null, "", "3.3", "L'ajout d'un membre dont le password n'est pas instanci√© est accept√©");
-		addMemberBadEntryTest ( sn, "B", "   qwd ", "", "3.4", "L'ajout d'un membre dont le password ne contient pas au moins 4 caracteres, autre que des espaces de d√©but ou de fin, est accept√©");
-		addMemberBadEntryTest ( sn, "BBBB", "bbbb", null, "3.5", "L'ajout d'un membre dont le profil n'est pas instanci√© est accept√©");
+		addMemberBadEntryTest ( sn, null, "qsdfgh", "", "3.1", "L'ajout d'un membre dont le pseudo n'est pas instanciÈ est acceptÈ");
+		addMemberBadEntryTest ( sn, " ", "qsdfgh", "", "3.2", "L'ajout d'un membre dont le pseudo ne contient pas un caracteres, autre que des espaces, est acceptÈ");
+		addMemberBadEntryTest ( sn, "B", null, "", "3.3", "L'ajout d'un membre dont le password n'est pas instanciÈ est acceptÈ");
+		addMemberBadEntryTest ( sn, "B", "   qwd ", "", "3.4", "L'ajout d'un membre dont le password ne contient pas au moins 4 caracteres, autre que des espaces de dÈbut ou de fin, est acceptÈ");
+		addMemberBadEntryTest ( sn, "BBBB", "bbbb", null, "3.5", "L'ajout d'un membre dont le profil n'est pas instanciÈ est acceptÈ");
 
 
 
-		// <=> fiche num√©ro 2
+		// <=> fiche numÈro 2
 
-		// ajout de 3 membres avec entr√©es "correctes"
+		// ajout de 3 membres avec entrÈes "correctes"
 		
 		addMemberOKTest (sn, "Paul", "paul", "lecteur impulsif","3.6,1");
-		addMemberOKTest (sn, "Antoine", "antoine", "grand amoureux de la litt√©rature","3.6,2");
+		addMemberOKTest (sn, "Antoine", "antoine", "grand amoureux de la littÈrature","3.6,2");
 		addMemberOKTest (sn, "Alice", "alice", "20 ans, sexy","3.6,3");
 
 		// tentative d'ajout de membre "existant"
 		
-		addMemberAlreadyExistsTest(sn, "Paul", "abcdefghij", "", "3.7", "L'ajout d'un membre avec le pseudo du premier membre ajout√© est accept√©");
-		addMemberAlreadyExistsTest(sn, "Alice", "abcdefghij", "", "3.8", "L'ajout d'un membre avec le pseudo du dernier membre ajout√© est accept√©");
-		addMemberAlreadyExistsTest(sn, "anToine", "abcdefghij", "", "3.9", "L'ajout d'un membre avec un pseudo existant (avec casse diff√©rente) est accept√©");
-		addMemberAlreadyExistsTest(sn, " Antoine ", "abcdefghij", "", "3.10", "L'ajout d'un membre avec un pseudo existant (avec leading et trailing blanks) est accept√©");		
+		addMemberAlreadyExistsTest(sn, "Paul", "abcdefghij", "", "3.7", "L'ajout d'un membre avec le pseudo du premier membre ajoutÈ est acceptÈ");
+		addMemberAlreadyExistsTest(sn, "Alice", "abcdefghij", "", "3.8", "L'ajout d'un membre avec le pseudo du dernier membre ajoutÈ est acceptÈ");
+		addMemberAlreadyExistsTest(sn, "anToine", "abcdefghij", "", "3.9", "L'ajout d'un membre avec un pseudo existant (avec casse diffÈrente) est acceptÈ");
+		addMemberAlreadyExistsTest(sn, " Antoine ", "abcdefghij", "", "3.10", "L'ajout d'un membre avec un pseudo existant (avec leading et trailing blanks) est acceptÈ");		
 
 
 		if (nbFilms != sn.nbFilms()) {
-			System.out.println("Erreur 3.11 :  le nombre de films apr√®s utilisation de addMember a √©t√© modifi√©");
+			System.out.println("Erreur 3.11 :  le nombre de films aprËs utilisation de addMember a ÈtÈ modifiÈ");
 		}
 		if (nbLivres != sn.nbBooks()) {
-			System.out.println("Erreur 3.12 :  le nombre de livres apr√®s utilisation de addMember a √©t√© modifi√©");				
+			System.out.println("Erreur 3.12 :  le nombre de livres aprËs utilisation de addMember a ÈtÈ modifiÈ");				
 		}
 
 		// ce n'est pas du test, mais cela peut "rassurer"...
