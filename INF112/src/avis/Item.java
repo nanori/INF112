@@ -99,7 +99,9 @@ public abstract class Item {
 	
 	public String toString(){
 		String retour="Titre : " + titre + "\n" +
-					"Genre : " + genre + "\n";
+					"Genre : " + genre + "\n" + 
+					"Note Moyenne : " + getMoyenne() + "\n";
+					
 		
 		return retour;
 	}
