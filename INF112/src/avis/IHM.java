@@ -83,7 +83,7 @@ public class IHM {
 
 
 		menuMembre = new JMenu("membre");
-		jMenuItem = new JMenuItem("afficher le rÃ©seau social");
+		jMenuItem = new JMenuItem("afficher le réseau social");
 		jMenuItem.addActionListener(new AffichageReseau());
 		menuMembre.add(jMenuItem);
 		jMenuItem = new JMenuItem("consulter un item");
@@ -419,11 +419,11 @@ public class IHM {
 			ajouterFilm.add(jPanelTitre);
 			jPanelGenre = new JPanelEntree(" genre ? ", genreFilm, largeurFenetre);
 			ajouterFilm.add(jPanelGenre);
-			jPanelRealisateur = new JPanelEntree(" rÃ©alisateur ? ", realisateurFilm, largeurFenetre);
+			jPanelRealisateur = new JPanelEntree(" réalisateur ? ", realisateurFilm, largeurFenetre);
 			ajouterFilm.add(jPanelRealisateur);
-			jPanelScenariste = new JPanelEntree(" scÃ©nariste ? ", scenaristeFilm, largeurFenetre);
+			jPanelScenariste = new JPanelEntree(" scénariste ? ", scenaristeFilm, largeurFenetre);
 			ajouterFilm.add(jPanelScenariste);
-			jPanelNombrePages = new JPanelEntree(" durÃ©e ? ", dureeFilm, largeurFenetre);
+			jPanelNombrePages = new JPanelEntree(" durée ? ", dureeFilm, largeurFenetre);
 			ajouterFilm.add(jPanelNombrePages);
 			JButton valider = new JButton("Valider ajouter item film"); 
 			valider.setPreferredSize(new Dimension(largeurFenetre-20, 25));
@@ -564,9 +564,9 @@ public class IHM {
 			IHM ihm = new IHM(); 
 			ihm.setMetier(sn);
 
-			// ajout de 3 membres avec entrÃ©es "correctes"
+			// ajout de 3 membres avec entrées "correctes"
 			sn.addMember("Paul", "paul", "lecteur impulsif");
-			sn.addMember("Antoine", "antoine", "grand amoureux de littÃ©rature");
+			sn.addMember("Antoine", "antoine", "grand amoureux de littérature");
 			sn.addMember("Alice", "alice", "23 ans, sexy");
 
 

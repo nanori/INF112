@@ -388,7 +388,6 @@ public class SocialNetwork {
 		}
 		
 		
-		
 		Avis avis = new Avis(note, commentaire, item, member);
 		item.addReviewToCollection(avis);
 		
