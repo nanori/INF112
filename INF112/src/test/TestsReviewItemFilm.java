@@ -123,7 +123,7 @@ public class TestsReviewItemFilm {
 
 		System.out.println("***************************");
 		System.out.println("***************************");
-		System.out.println("Tests d'ajout de films:");
+		System.out.println("Tests de notation de films:");
 		System.out.println("\tTests OK: " + cptOk);
 		
 		System.out.println("\tTests NOK: " + cptErr);

@@ -124,7 +124,7 @@ public class TestsReviewItemBook {
 
 		System.out.println("***************************");
 		System.out.println("***************************");
-		System.out.println("Tests d'ajout de livres:");
+		System.out.println("Tests de notation de livres:");
 		System.out.println("\tTests OK: " + cptOk);
 		
 		System.out.println("\tTests NOK: " + cptErr);

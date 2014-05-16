@@ -174,7 +174,7 @@ public class TestsAddItemFilm {
 		
 		//Verification finale
 		if (nbFilms +2 != sn.nbFilms()) {
-			System.out.println("Erreur 5.2 :  le nombre de films aprés utilisation de addMember a été modifié");				
+			System.out.println("Erreur 5.1 :  le nombre de films aprés utilisation de addMember a été modifié");				
 		}
 
 		
