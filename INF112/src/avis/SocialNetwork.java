@@ -88,7 +88,18 @@ public class SocialNetwork {
 	 * @param profil
 	 * 			Descriptif du membre à ajouter
 	 * 
+	 * @throws BadEntry :
+	 * <ul>
+	 *  <li>  si le pseudo n'est pas instancié ou a moins de 1 caractère autre que des espaces .  </li>
+	 *  <li>  si le password n'est pas instancié ou a moins de 4 caractères autres que des leadings or trailing blanks. </li>
+	 *  <li>  si le profil n'est pas instancié.  </li>
+	 * </ul><br>       
+	 * 
+	 * @throws MemberAlreadyExists 
+	 * 			membre de même pseudo déjà  présent dans le <i>SocialNetwork</i> (même pseudo : indifférent à   la casse  et aux leadings et trailings blanks)
+	 * 
 	 */
+	
 	public void addMember(String pseudo, String password, String profil) throws BadEntry, MemberAlreadyExists {
 		
 		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
@@ -152,6 +163,19 @@ public class SocialNetwork {
 	 * 
 	 * @param duree
 	 * 			Durée du film
+	 * 
+	 * @throws BadEntry :
+	 * <ul>
+	 *  <li>  si le pseudo n'est pas instancié ou a moins de 1 caractère autre que des espaces .  </li>
+	 *  <li>  si le password n'est pas instancié ou a moins de 4 caractères autres que des leadings or trailing blanks. </li>
+	 *  <li>  si le titre n'est pas instancié ou a moins de 1 caractère autre que des espaces.  </li>
+	 *  <li>  si le genre n'est pas instancié. </li>
+	 *  <li>  si le réalisateur n'est pas instancié. </li>
+	 *  <li>  si le scénariste n'est pas instancié. </li>
+	 *  <li>  si la durée n'est pas positive.  </li>
+	 * </ul><br>       
+	 * @throws NotMember : si le pseudo n'est pas celui d'un membre ou si le pseudo et le password ne correspondent pas.
+	 * @throws ItemFilmAlreadyExists : item film de même titre  déjà  présent (même titre : indifférent à   la casse  et aux leadings et trailings blanks)
 	 * 
 	 */
 	public void addItemFilm(String pseudo, String password, String titre, String genre, String realisateur, String scenariste, int duree) throws BadEntry, NotMember, ItemFilmAlreadyExists {
@@ -228,6 +252,18 @@ public class SocialNetwork {
 	 * 
 	 * @param nbPages
 	 * 			Scenariste du livre
+	 * 
+	 * @throws BadEntry :
+	 * <ul>
+	 *  <li>  si le pseudo n'est pas instancié ou a moins de 1 caractère autre que des espaces .  </li>
+	 *  <li>  si le password n'est pas instancié ou a moins de 4 caractères autres que des leadings or trailing blanks. </li>
+	 *  <li>  si le titre n'est pas instancié ou a moins de 1 caractère autre que des espaces.  </li>
+	 *  <li>  si le genre n'est pas instancié. </li>
+	 *  <li>  si l'auteur n'est pas instancié. </li>
+	 *  <li>  si le nombre de pages n'est pas positif.  </li>
+	 * </ul><br>       
+	 * @throws NotMember : si le pseudo n'est pas celui d'un membre ou si le pseudo et le password ne correspondent pas.
+	 * @throws ItemBookAlreadyExists item livre de même titre  déjà  présent (même titre : indifférent à  la casse  et aux leadings et trailings blanks)
 	 */
 	public void addItemBook(String pseudo, String password, String titre, String genre, String auteur, int nbPages) throws BadEntry, NotMember, ItemBookAlreadyExists {
 		boolean filmIsFound=false;
@@ -285,6 +321,9 @@ public class SocialNetwork {
 	 * 
 	 * @return 
 	 * 			Liste des items trouvé sous forme verbeuse
+	 * 
+	 * @throws BadEntry 
+	 * 			si le nom n'est pas instancié ou a moins de 1 caractère autre que des espaces.
 	 */
 	public LinkedList<String> consultItems(String nom) throws BadEntry {
 		LinkedList<String> returnList = new LinkedList<String>();
@@ -333,6 +372,19 @@ public class SocialNetwork {
 	 * 
 	 * @return 
 	 * 			Moyenne des notes déposées sur ce film
+	 * 
+	 * @throws BadEntry :
+	 * <ul>
+	 *  <li>  si le pseudo n'est pas instancié ou a moins de 1 caractère autre que des espaces .  </li>
+	 *  <li>  si le password n'est pas instancié ou a moins de 4 caractères autres que des leadings or trailing blanks. </li>
+	 *  <li>  si le titre n'est pas instancié ou a moins de 1 caractère autre que des espaces.  </li>
+	 *  <li>  si la note n'est pas comprise entre 0.0 et 5.0. </li>
+	 *  <li>  si le commentaire n'est pas instancié. </li>
+	 * </ul><br>       
+	 * @throws NotMember : si le pseudo n'est pas celui d'un membre ou si le pseudo et le password ne correspondent pas.
+	 * @throws NotItem : si le titre n'est pas le titre d'un film.
+	 * 
+	 * @return la note moyenne des notes sur ce film  
 	 */
 	public float reviewItemFilm(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
 
@@ -421,6 +473,17 @@ public class SocialNetwork {
 	 * 
 	 * @return 
 	 * 			Moyenne des notes déposées sur ce livre
+	 * 
+	 * @throws BadEntry :
+	 * <ul>
+	 *  <li>  si le pseudo n'est pas instancié ou a moins de 1 caractère autre que des espaces .  </li>
+	 *  <li>  si le password n'est pas instancié ou a moins de 4 caractères autres que des leadings or trailing blanks. </li>
+	 *  <li>  si le titre n'est pas instancié ou a moins de 1 caractère autre que des espaces.  </li>
+	 *  <li>  si la note n'est pas comprise entre 0.0 et 5.0. </li>
+	 *  <li>  si le commentaire n'est pas instancié. </li>
+	 * </ul><br>       
+	 * @throws NotMember : si le pseudo n'est pas celui d'un membre ou si le pseudo et le password ne correspondent pas.
+	 * @throws NotItem : si le titre n'est pas le titre d'un livre.
 	 */
 	public float reviewItemBook(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
 		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
