@@ -30,12 +30,6 @@ public abstract class Item {
 	private LinkedList<Avis> avis;
 	
 	/**
-	 * Le socialNetwork
-	 */
-	private SocialNetwork socialNetwork = null;
-
-	
-	/**
 	 * Constructeur Item
 	 * <br>
 	 * A la construction d'un item, la liste avis est instanciée avec une liste vide.
@@ -47,8 +41,8 @@ public abstract class Item {
 	 */
 	public Item (String titre, String genre){
 		this.avis = new LinkedList<Avis>();
-		this.titre=titre;
-		this.genre=genre;
+		this.titre = titre.trim();
+		this.genre = genre;
 	}
 	
 		
