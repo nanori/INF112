@@ -23,11 +23,6 @@ public class Member {
 	private String profil;
 	
 	/**
-	 * Le SocialNetwork
-	 */
-	private SocialNetwork socialNetwork = null;
-	
-	/**
 	 * Liste des avis déposés par le membre
 	 */
 	private LinkedList <Avis> avis;
@@ -44,11 +39,10 @@ public class Member {
 	 * @param socialNetwork
 	 * 			Le SocialNetwork
 	 */
-	public Member(String pseudo, String password, String profil, SocialNetwork socialNetwork){
+	public Member(String pseudo, String password, String profil){
 		this.pseudo=pseudo;
 		this.password=password;
 		this.profil=profil;
-		this.socialNetwork = socialNetwork;
 		avis = new LinkedList<Avis>();
 	}
 	
