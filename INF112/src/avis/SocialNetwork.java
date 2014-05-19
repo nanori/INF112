@@ -179,19 +179,13 @@ public class SocialNetwork {
 	 * 
 	 */
 	public void addItemFilm(String pseudo, String password, String titre, String genre, String realisateur, String scenariste, int duree) throws BadEntry, NotMember, ItemFilmAlreadyExists {
-		//Variables
-		boolean filmIsFound=false;
-		int i=0;
-		
-		//Pseudo contient au moins 1 caractere autre que des espaces
+		//Tests des parametres d'entrés
 		if(pseudo==null || pseudo.trim().length()<1)
 			throw new BadEntry("Invalid pseudo");
 		
-		//Password superieur a 4 caractères autre que les leading et trailling banks
 		if(password==null || password.trim().length()<4)
 			throw new BadEntry("Invalid password");
 		
-		//Titre contient au moins 1 caractere autre que des espaces
 		if(titre==null || titre.trim().length()<1)
 			throw new BadEntry("Invalid title");
 		
@@ -212,16 +206,9 @@ public class SocialNetwork {
 			throw new NotMember("Member does not exist");
 		
 		//Test de l'existance de l'item
-		i=0;
-		while (!filmIsFound && i<nbFilms()){
-			if(items.get(i) instanceof Film){
-				if(items.get(i).exists(titre)){
-					throw new ItemFilmAlreadyExists();
-				}
-			}
-			i++;
-		}
-		
+		if (getFilm(titre) != null)
+			throw new ItemFilmAlreadyExists();
+				
 		//Ajout du film
 		items.add(new Film(titre, genre, realisateur, scenariste, duree));
 		
@@ -266,11 +253,6 @@ public class SocialNetwork {
 	 * @throws ItemBookAlreadyExists item livre de même titre  déjà  présent (même titre : indifférent à  la casse  et aux leadings et trailings blanks)
 	 */
 	public void addItemBook(String pseudo, String password, String titre, String genre, String auteur, int nbPages) throws BadEntry, NotMember, ItemBookAlreadyExists {
-		boolean filmIsFound=false;
-		Book tmpBook;
-		int i=0;
-		
-		//Test des parametres
 		if(pseudo==null || pseudo.trim().length()<1)
 			throw new BadEntry("Invalid pseudo");
 		
@@ -295,20 +277,12 @@ public class SocialNetwork {
 				
 		
 		//Test de l'existance de l'item
-		i=0;
-		while (!filmIsFound && i<nbBooks()){
-			if(items.get(i) instanceof Book){
-				tmpBook = (Book)items.get(i);
-				if(tmpBook.exists(titre)){
-					throw new ItemBookAlreadyExists();
-				}
-			}
-			i++;
-		}
+		if (getBook(titre) != null)
+			throw new ItemBookAlreadyExists();
 		
 		//Ajout du film
-		tmpBook = new Book(titre, genre, auteur, nbPages);
-		items.add(tmpBook);
+		items.add(new Book(titre, genre, auteur, nbPages));
+
 	}
 
 	/**
@@ -387,63 +361,35 @@ public class SocialNetwork {
 	 * @return la note moyenne des notes sur ce film  
 	 */
 	public float reviewItemFilm(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
-
-		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
-		// composé uniquement de blancs
-		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?")) {
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?"))
 			throw new BadEntry("Invalid username");
-		}
-
-		// password non instancié OU taille inferieure a 4 (leading et trailing
-		// blanks ignorés)
-		if (password == null || password.trim().length() < 4) {
-			throw new BadEntry("Invalid password");
-		}
 		
+		if (password == null || password.trim().length() < 4)
+			throw new BadEntry("Invalid password");		
 		
-		//titre non instancié ou ou moins de 1 caracteres autres que espaces
-		if (titre==null || titre.trim().length() < 1) {
+		if (titre==null || titre.trim().length() < 1)
 			throw new BadEntry("Invalid title");
-		}
 		
-		//note en dehors de [0.0, 5.0]
-		if (note < 0.0 || note > 5.0) {
+		if (note < 0.0 || note > 5.0)
 			throw new BadEntry("Invalid grade");
-		}
 		
-		//commentaire non instancié
-		if (commentaire == null) {
+		if (commentaire == null)
 			throw new BadEntry("Invalid comment");
-		}
 		
 		//pseudo et password ne correspondent pas ou pseudo n'existe pas
-		int i = 0;
-		
 		Member member = authentication(pseudo, password);
-		if(member==null){
+		if(member==null)
 			throw new NotMember("Member does not exist");
-		}
 
 		//Titre ne correspond pas a un film
-		i = 0;
-		boolean filmIsFound = false;
-		Item item = null;
-		while (!filmIsFound && i < nbFilms()) {
-			if (items.get(i) instanceof Film) {
-				filmIsFound=items.get(i).exists(titre);				
-				item = items.get(i);
-			}
-			i++;
-		}
-		if(!filmIsFound){
+		Film f = getFilm(titre);
+		if(f == null){
 			throw new NotItem("Film does not exist");
 		}
 		
+		f.addReviewToCollection(new Avis(note, commentaire, f, member));
 		
-		Avis avis = new Avis(note, commentaire, item, member);
-		item.addReviewToCollection(avis);
-		
-		return item.getMoyenne();
+		return f.getMoyenne();
 	}
 
 	/**
@@ -486,60 +432,36 @@ public class SocialNetwork {
 	 * @throws NotItem : si le titre n'est pas le titre d'un livre.
 	 */
 	public float reviewItemBook(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
-		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
-		// composé uniquement de blancs
-		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?")) {
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?"))
 			throw new BadEntry("Invalid username");
-		}
-
-		// password non instancié OU taille inferieure a 4 (leading et trailing
-		// blanks ignorés)
-		if (password == null || password.trim().length() < 4) {
+		
+		if (password == null || password.trim().length() < 4)
 			throw new BadEntry("Invalid password");
-		}
-				
-				
-		//titre non instancié ou ou moins de 1 caracteres autres que espaces
-		if (titre==null || titre.trim().length() < 1) {
+
+		if (titre==null || titre.trim().length() < 1)
 			throw new BadEntry("Invalid title");
-		}
-				
-		//note en dehors de [0.0, 5.0]
-		if (note < 0.0 || note > 5.0) {
+
+		if (note < 0.0 || note > 5.0)
 			throw new BadEntry("Invalid grade");
-		}
-				
-		//commentaire non instancié
-		if (commentaire == null) {
+
+		if (commentaire == null)
 			throw new BadEntry("Invalid comment");
-		}
+
 				
 		//pseudo et password ne correspondent pas ou pseudo n'existe pas
-		int i = 0;
 		Member member = authentication(pseudo, password);
-		if(member==null){
+		if(member==null)
 			throw new NotMember("Member does not exist");
-		}
+
 
 		//Titre ne correspond pas a un livre
-		i = 0;
-		boolean bookIsFound = false;
-		Item item = null;
-		while (!bookIsFound && i < nbBooks()) {
-			if (items.get(i) instanceof Book) {
-				bookIsFound=items.get(i).exists(titre);				
-				item = items.get(i);
-			}
-			i++;
-		}
-		if(!bookIsFound){
+		Book b = getBook(titre);
+		if(b == null)
 			throw new NotItem("Book does not exist");
-		}
 						
-		Avis avis = new Avis(note, commentaire, item, member);
-		item.addReviewToCollection(avis);
+		b.addReviewToCollection(new Avis(note, commentaire, b, member));
 				
-		return item.getMoyenne();
+		return b.getMoyenne();
 	}
 
 	/**
@@ -568,6 +490,36 @@ public class SocialNetwork {
 		}
 		
 		return m;
+	}
+	
+	private Book getBook(String titre){
+		Book b = null;
+		int i=0;
+		int nbItems = nbBooks() + nbFilms();
+		while (i<nbItems){
+			if(items.get(i) instanceof Book){
+				if(items.get(i).exists(titre)){
+					b = (Book)items.get(i);
+				}
+			}
+			i++;
+		}
+		return b;
+	}
+
+	private Film getFilm(String titre){
+		Film b = null;
+		int i=0;
+		int nbItems = nbBooks() + nbFilms();
+		while (i<nbItems){
+			if(items.get(i) instanceof Film){
+				if(items.get(i).exists(titre)){
+					b = (Film)items.get(i);
+				}
+			}
+			i++;
+		}
+		return b;
 	}
 	
 	public String toString() {
