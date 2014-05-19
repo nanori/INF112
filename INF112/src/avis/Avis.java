@@ -66,4 +66,10 @@ public class Avis {
 	public float getNote(){
 		return note;
 	}
+	
+	public String toString(){
+		return "Note : " + note +
+				"\nCommentaire : " + commentaire +
+				"\nDéposé par : " + member;
+	}
 }
