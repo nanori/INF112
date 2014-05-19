@@ -131,7 +131,7 @@ public class SocialNetwork {
 			throw new MemberAlreadyExists();
 		}
 
-		Member membre = new Member(pseudo, password, profil, this);
+		Member membre = new Member(pseudo, password, profil);
 		members.addLast(membre);
 	}
 
@@ -380,8 +380,15 @@ public class SocialNetwork {
 			throw new NotItem("Film does not exist");
 		}
 		
-		f.addReviewToCollection(new Avis(note, commentaire, f, member));
-		
+		Avis avis = member.getReview(f);
+		if(avis == null){
+			avis = new Avis(note, commentaire, f, member);
+			member.addReviewToCollection(avis);
+			f.addReviewToCollection(avis);
+		} else {
+			avis.update(note, commentaire);
+		}
+					
 		return f.getMoyenne();
 	}
 
@@ -451,9 +458,16 @@ public class SocialNetwork {
 		Book b = getBook(titre);
 		if(b == null)
 			throw new NotItem("Book does not exist");
-						
-		b.addReviewToCollection(new Avis(note, commentaire, b, member));
-				
+		
+		Avis avis = member.getReview(b);
+		if(avis == null){
+			avis = new Avis(note, commentaire, b, member);
+			member.addReviewToCollection(avis);
+			b.addReviewToCollection(avis);
+		} else {
+			avis.update(note, commentaire);
+		}
+		
 		return b.getMoyenne();
 	}
 
@@ -485,6 +499,13 @@ public class SocialNetwork {
 		return m;
 	}
 	
+	/**
+	 * Retourne le livre dont le titre est passé en paramettre
+	 * @param titre
+	 * 			Titre à rechercher
+	 * @return
+	 * 			Book avec le titre correspondant ou null s'il n'est pas trouvé
+	 */
 	private Book getBook(String titre){
 		Book b = null;
 		int i=0;
@@ -499,7 +520,14 @@ public class SocialNetwork {
 		}
 		return b;
 	}
-
+	
+	/**
+	 * Retourne le film dont le titre est passé en paramettre
+	 * @param titre
+	 * 			Titre à rechercher
+	 * @return
+	 *			Film avec le titre correspondant ou null s'il n'est pas trouvé
+	 */
 	private Film getFilm(String titre){
 		Film b = null;
 		int i=0;

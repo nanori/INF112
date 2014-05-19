@@ -27,14 +27,14 @@ public class Avis {
 	 * @see Avis#Avis(float, String, Item, Member)
 	 */
 	
-	private Item item = null;
+	private Item item;
 	
 	/**
 	 * Le membre qui a déposé l'avis
 	 * 
 	 * @see Avis#Avis(float, String, Item, Member)
 	 */
-	private Member member = null;
+	private Member member;
 	
 	/**
 	 * Constructeur Avis
@@ -58,7 +58,7 @@ public class Avis {
 	}
 	
 	/**
-	 *Retourne la note de déposée par le membre sur cet avis
+	 *Retourne la note de déposée par le membre sur cet avis.
 	 * 
 	 * @return
 	 * 			Note associée à l'avis
@@ -67,9 +67,36 @@ public class Avis {
 		return note;
 	}
 	
+	/**
+	 * Test si l'item en parametre corespond à l'item de l'avis
+	 * 
+	 * @param item
+	 * 			Item à tester
+	 * @return
+	 * 			True si l'item correspond
+	 */
+	public boolean itemEquals (Item item){
+		if(this.item.equals(item))
+			return true;
+
+		return false;
+	}
+	
+	/**
+	 * Met à jour la note et le commentaire de l'avis
+	 * 
+	 * @param note
+	 * 			Nouvelle note
+	 * @param commentaire
+	 * 			Nouveau commentaire
+	 */
+	public void update (float note, String commentaire){
+		this.note = note;
+		this.commentaire = commentaire;
+	}
+	
 	public String toString(){
 		return "Note : " + note +
-				"\nCommentaire : " + commentaire +
-				"\nDéposé par : " + member;
+				"\nCommentaire : " + commentaire;
 	}
 }

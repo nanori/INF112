@@ -82,7 +82,7 @@ public class Member {
 	}
 
 	/**
-	 * Ajoute un avis à la linkedList avis
+	 * Ajoute un avis à la fin de la linkedList avis
 	 * 
 	 * @param avis
 	 * 			Avis à ajouter
@@ -91,6 +91,25 @@ public class Member {
 		this.avis.addLast(avis);
 	}
 	
+	/**
+	 * Renvoi l'avis de l'item passé en paramettre
+	 * 
+	 * @param item
+	 * 			Item de réferance
+	 * @return
+	 * 			Avis concerné par l'item ou null si l'item n'a pas été noté par ce membre
+	 */
+	public Avis getReview(Item item){
+		int i=0;
+		while (i<avis.size()){
+			if (avis.get(i).itemEquals(item))
+				return avis.get(i);
+			
+			i++;
+		}
+		
+		return null;
+	}
 	
 	public String toString(){
 		String retour="Pseudo : " + pseudo + "\n" +
