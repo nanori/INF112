@@ -68,15 +68,18 @@ public class TestsReviewItemBook {
 
 	}
 
-	public static void reviewItemBookOK(SocialNetwork sn, String pseudo, String password, String titre, float note, String commentaire, String idTest, String messErreur) {
+	public static float reviewItemBookOK(SocialNetwork sn, String pseudo, String password, String titre, float note, String commentaire, String idTest, String messErreur) {
+		float r = 0;
 		try {
-			sn.reviewItemBook(pseudo, password, titre, note, commentaire);
+			r = sn.reviewItemBook(pseudo, password, titre, note, commentaire);
 			cptOk++;
+			return r;
 		} catch (Exception e) {
 			System.out.println("Test " + idTest + " : exception non prévue. " + e);
 			e.printStackTrace();
 			cptErr++;
 		}
+		return r;
 	}
 
 	public static void main(String[] args) {
@@ -121,12 +124,20 @@ public class TestsReviewItemBook {
 
 		// Tests sans levée d'exception attendue
 		reviewItemBookOK(sn, "Jean", "123456", "Le Cidre", 4.5f, "Hic!", "4.1", "");
-
+		float moy = reviewItemBookOK(sn, "Jean", "123456", "Le Cidre", 2.0f, "Hic!", "4.3", "");
+		if (moy != 2.0)
+			System.out.println("4.3 : la moyenne n'es pas corecte apres deux notations du même membre sur un item ( moy = " + moy + ")");
+		
+		moy = reviewItemBookOK(sn, "geubeutreu", "123456", "Le Cidre", 5f, "Good ;)", "4.1", "");
+		if (moy != 3.5)
+			System.out.println("4.4 : la moyenne n'es pas corecte apres deux notations de deux membres sur un item ( moy = " + moy + ")");
+		
+		
+		
 		System.out.println("***************************");
 		System.out.println("***************************");
 		System.out.println("Tests de notation de livres:");
 		System.out.println("\tTests OK: " + cptOk);
-		
 		System.out.println("\tTests NOK: " + cptErr);
 		System.out.println("***************************");
 		System.out.println("***************************");
