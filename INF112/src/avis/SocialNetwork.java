@@ -301,20 +301,13 @@ public class SocialNetwork {
 	 */
 	public LinkedList<String> consultItems(String nom) throws BadEntry {
 		LinkedList<String> returnList = new LinkedList<String>();
-		int i=0;
 		
-		//Test des parametres
-		if(nom==null || nom.trim().length()<1)
-			throw new BadEntry("Invalid title");
+		if (getBook(nom) != null)
+			returnList.add(getBook(nom).toString());
 		
-		
-		while (i<items.size()){
-			if(items.get(i).exists(nom)){
-				returnList.add(items.get(i).toString());
-			}
-			i++;
-		}
-		
+		if (getFilm(nom) != null)
+			returnList.add(getFilm(nom).toString());
+	
 		return returnList;
 		
 	}
