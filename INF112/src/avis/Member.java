@@ -33,6 +33,16 @@ public class Member {
 	private LinkedList <Avis> avis;
 	
 	/**
+	 * Liste des avis déposés par le membre
+	 */
+	private LinkedList <Opinion> opinions;
+	
+	/**
+	 * Karma du membre. Flotant compris entre 0 et 2. Plus le karma du membre est élevé, plus ses Avis sont importante.
+	 */
+	private float karma;
+	
+	/**
 	 * Initialise les attributs
 	 * 
 	 * @param pseudo
@@ -47,6 +57,9 @@ public class Member {
 		this.password=password;
 		this.profil=profil;
 		avis = new LinkedList<Avis>();
+		opinions = new LinkedList<Opinion>();
+		karma = 1.0f;
+		System.err.println("Constructeur Member : Taille opinions = "+ opinions.size());
 	}
 	
 	/**
@@ -112,6 +125,66 @@ public class Member {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Renvoi l'opinion de l'avis passé en paramettre
+	 * 
+	 * @param avis
+	 * 			Avis de réference
+	 * @return
+	 * 			Opinion concerné par l'avis ou null si l'avis n'a pas été noté par ce membre
+	 */
+	public Opinion getOpinion(Avis avis){
+		int i=0;
+		
+		while (i<opinions.size()){
+			if (opinions.get(i).avisEquals(avis))
+				return opinions.get(i);
+			
+			i++;
+		}
+		
+		return null;
+	}
+	
+	public void addOpinion(Opinion opinion){
+		this.opinions.addLast(opinion);
+		System.err.println("("+this.pseudo+")addOpinion Member : Taille opinions apres ajout = "+ opinions.size());
+	}
+	
+	public float updateKarma(){
+		int i = 0;
+		int somme = 0;
+		
+		/*
+		 * Récuperation de la somme des opinions
+		 */
+		System.out.println(opinions.size());
+		while (i<opinions.size()){
+			somme += opinions.get(i).getOpinionMark();
+			i++;
+		}
+		
+		/*
+		 * Calcul du nouveau karma
+		 */
+		this.karma = (float)((2/Math.PI)*(Math.atan(somme/4.0)+Math.PI/2));
+		
+		/*
+		 * Mise a jour de la pondération dans les avis
+		 */
+		i=0;
+		while (i<avis.size()){
+			avis.get(i).updatePonderation();
+			i++;
+		}
+		
+		return karma;
+	}
+	
+	public float whatIsYourKarma(){
+		return karma;
 	}
 	
 	public String toString(){

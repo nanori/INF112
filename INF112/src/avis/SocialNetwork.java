@@ -1,14 +1,20 @@
 package avis;
 
 import java.util.LinkedList;
+
 import exception.BadEntry;
 import exception.ItemFilmAlreadyExists;
 import exception.ItemBookAlreadyExists;
 import exception.MemberAlreadyExists;
 import exception.NotItem;
 import exception.NotMember;
+import exception.NotReview;
 
 public class SocialNetwork {
+	public enum itemsTypes {
+		BOOK,
+		FILM
+	}
 
 	/**
 	 * Liste contenant l'ensembe des membres du social network
@@ -596,6 +602,88 @@ public class SocialNetwork {
 			}
 		}
 		return retour;
+	}
+	
+	private float reviewOpinionBook(String pseudo, String password, String pseudoMemberToReview, String titre, boolean opinion) throws NotItem, BadEntry, NotMember, NotReview {
+		/*
+		 * Variables
+		 */
+		Member member, memberToMark;
+		Book b;
+		Opinion o;
+		Avis avis;
+
+		/*
+		 * Tests des paramettres d'entrés
+		 */
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?"))
+			throw new BadEntry("Invalid username");
+		
+		if (password == null || password.trim().length() < 4)
+			throw new BadEntry("Invalid password");
+
+		if (titre==null || titre.trim().length() < 1)
+			throw new BadEntry("Invalid title");
+		
+		member = authentication(pseudo, password);
+		if (member == null)
+			throw new NotMember("Member " + pseudo + " does not exist or the password is wrong");
+		
+		memberToMark = memberExist(pseudoMemberToReview);
+		if (memberToMark == null)
+			throw new NotMember("Member " + pseudo + " does not exist");
+			
+		b = getBook(titre);
+		if (b == null) 
+			throw new NotItem("Book " + titre + " does not exist");
+		
+		avis = memberToMark.getReview(b);
+		if (avis == null)
+			throw new NotReview();
+		
+		/*
+		 * Ajout de l'opinion
+		 */
+		o = memberToMark.getOpinion(avis);
+		if(o == null){
+			o = new Opinion(opinion, avis);
+			memberToMark.addOpinion(o);
+		} else {
+			o.updateOpinion(opinion);
+		}
+		
+		/*
+		 * Mise a jour du karma
+		 */
+		return memberToMark.updateKarma();
+	}
+
+	private float reviewOpinionFilm(String pseudo, String password, String memberToReview, String titre, boolean opinion) throws NotItem, BadEntry, NotMember{
+		return 0;
+	}
+	
+	public float reviewOpinion(String pseudo, String password, String memberToReview, String titre, itemsTypes itemType, boolean opinion) throws NotItem, BadEntry, NotMember, NotReview{
+		switch (itemType) {
+		case BOOK :
+			return reviewOpinionBook(pseudo, password, memberToReview, titre, opinion);
+		
+		case FILM :
+			return reviewOpinionFilm(pseudo, password, memberToReview, titre, opinion);
+		
+		default :
+			throw new BadEntry("Error while marking member");
+		}
+	}
+	
+	private Member memberExist (String pseudo) {
+		int i = 0;
+		while (i < nbMembers()) {
+			if(members.get(i).exists(pseudo))
+				return members.get(i);
+			i++;
+		}
+		
+		return null;
 	}
 
 }

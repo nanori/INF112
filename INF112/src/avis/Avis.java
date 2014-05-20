@@ -32,6 +32,8 @@ public class Avis {
 	 */
 	private Member member;
 	
+	private float ponderation;
+	
 	/**
 	 * Constructeur Avis
 	 * <br>
@@ -51,6 +53,7 @@ public class Avis {
 		this.commentaire = commentaire;
 		this.item = item;
 		this.member = member;
+		ponderation=member.whatIsYourKarma();
 	}
 	
 	/**
@@ -59,8 +62,9 @@ public class Avis {
 	 * @return
 	 * 			Note associée à l'avis
 	 */
-	public float getNote(){
-		return note;
+	public float [] getNote(){
+		float r [] = {note, ponderation};
+		return r;
 	}
 	
 	/**
@@ -89,6 +93,10 @@ public class Avis {
 	public void update (float note, String commentaire){
 		this.note = note;
 		this.commentaire = commentaire;
+	}
+	
+	public void updatePonderation(){
+		this.ponderation = member.whatIsYourKarma();
 	}
 	
 	public String toString(){

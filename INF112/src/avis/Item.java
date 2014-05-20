@@ -82,10 +82,17 @@ public abstract class Item {
 	 */
 	public float getMoyenne(){
 		float moy=0;
+		float tmpTab [];
+		float sommeNotes = 0;
+		float sommePonderations = 0;
 		for(int i=0; i<avis.size(); i++){
-			moy+=avis.get(i).getNote();
+			tmpTab=avis.get(i).getNote();
+			sommeNotes += tmpTab[0]*tmpTab[1];
+			System.err.println("tmpTab[0] = " + tmpTab[0] + " tmpTab[1] " + tmpTab[1]);
+			sommePonderations += tmpTab[1];
+			System.err.println("sommeNotes = " + sommeNotes + " sommePonderations " + sommePonderations);
 		}
-		moy = moy / avis.size();
+		moy = sommeNotes / sommePonderations;
 		
 		return moy;
 	}
