@@ -101,7 +101,7 @@ public class SocialNetwork {
 	 */
 	public void addMember(String pseudo, String password, String profil) throws BadEntry, MemberAlreadyExists {
 		/*
-		 * Tests des paramettre d'entrés
+		 * Tests des paramettres d'entrés
 		 */
 		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?"))
 			throw new BadEntry("Invalid username");
@@ -174,7 +174,7 @@ public class SocialNetwork {
 	 */
 	public void addItemFilm(String pseudo, String password, String titre, String genre, String realisateur, String scenariste, int duree) throws BadEntry, NotMember, ItemFilmAlreadyExists {
 		/*
-		 * Tests des paramettre d'entrés
+		 * Tests des paramettres d'entrés
 		 */
 		if(pseudo==null || pseudo.trim().length()<1)
 			throw new BadEntry("Invalid pseudo");
@@ -250,7 +250,7 @@ public class SocialNetwork {
 	 */
 	public void addItemBook(String pseudo, String password, String titre, String genre, String auteur, int nbPages) throws BadEntry, NotMember, ItemBookAlreadyExists {
 		/*
-		 * Tests des paramettre d'entrés
+		 * Tests des paramettres d'entrés
 		 */
 		if(pseudo==null || pseudo.trim().length()<1)
 			throw new BadEntry("Invalid pseudo");
@@ -298,8 +298,16 @@ public class SocialNetwork {
 	 * 			si le nom n'est pas instancié ou a moins de 1 caractère autre que des espaces.
 	 */
 	public LinkedList<String> consultItems(String nom) throws BadEntry {
+		/*
+		 * Test du paramettre d'entré
+		 */
+		if(nom==null || nom.trim().length()<1)
+			throw new BadEntry("Invalid title");
+		
+		/*
+		 * Recherche des Items
+		 */
 		LinkedList<String> returnList = new LinkedList<String>();
-		nom = nom.trim();
 		if (getBook(nom) != null)
 			returnList.add(getBook(nom).toString());
 		
@@ -307,7 +315,6 @@ public class SocialNetwork {
 			returnList.add(getFilm(nom).toString());
 	
 		return returnList;
-		
 	}
 
 	/**
@@ -352,6 +359,16 @@ public class SocialNetwork {
 	 * @return la note moyenne des notes sur ce film  
 	 */
 	public float reviewItemFilm(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
+		/*
+		 * Variables
+		 */
+		Member member = authentication(pseudo, password);
+		Film f = getFilm(titre);
+		Avis avis;
+		
+		/*
+		 * Tests des paramettres d'entrés
+		 */
 		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?"))
 			throw new BadEntry("Invalid username");
 		
@@ -367,26 +384,26 @@ public class SocialNetwork {
 		if (commentaire == null)
 			throw new BadEntry("Invalid comment");
 		
-		//pseudo et password ne correspondent pas ou pseudo n'existe pas
-		Member member = authentication(pseudo, password);
-		if(member==null)
+		if(member == null)
 			throw new NotMember("Member does not exist");
 
-		//Titre ne correspond pas a un film
-		Film f = getFilm(titre);
-		if(f == null){
+		if(f == null)
 			throw new NotItem("Film does not exist");
-		}
 		
-		Avis avis = member.getReview(f);
+		/*
+		 * Ajout de l'avis
+		 */
+		avis = member.getReview(f);
 		if(avis == null){
+			//Si le membre n'a pas déjà noté cet item
 			avis = new Avis(note, commentaire, f, member);
 			member.addReviewToCollection(avis);
 			f.addReviewToCollection(avis);
 		} else {
+			//Si le membre a déjà noté l'item
 			avis.update(note, commentaire);
 		}
-					
+		
 		return f.getMoyenne();
 	}
 
@@ -430,6 +447,16 @@ public class SocialNetwork {
 	 * @throws NotItem : si le titre n'est pas le titre d'un livre.
 	 */
 	public float reviewItemBook(String pseudo, String password, String titre, float note, String commentaire) throws BadEntry, NotMember, NotItem {
+		/*
+		 * Variables
+		 */
+		Member member = authentication(pseudo, password);
+		Book b = getBook(titre);
+		Avis avis;
+
+		/*
+		 * Tests des paramettres d'entrés
+		 */
 		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?"))
 			throw new BadEntry("Invalid username");
 		
@@ -445,24 +472,23 @@ public class SocialNetwork {
 		if (commentaire == null)
 			throw new BadEntry("Invalid comment");
 
-				
-		//pseudo et password ne correspondent pas ou pseudo n'existe pas
-		Member member = authentication(pseudo, password);
-		if(member==null)
+		if(member == null)
 			throw new NotMember("Member does not exist");
 
-
-		//Titre ne correspond pas a un livre
-		Book b = getBook(titre);
 		if(b == null)
 			throw new NotItem("Book does not exist");
 		
-		Avis avis = member.getReview(b);
+		/*
+		 * Ajout de l'avis
+		 */
+		avis = member.getReview(b);
 		if(avis == null){
+			//Si le membre n'a pas déjà noté cet item
 			avis = new Avis(note, commentaire, b, member);
 			member.addReviewToCollection(avis);
 			b.addReviewToCollection(avis);
 		} else {
+			//Si le membre a déjà noté cet item
 			avis.update(note, commentaire);
 		}
 		
@@ -486,6 +512,7 @@ public class SocialNetwork {
 		boolean memberIsFound = false;
 		Member m = null;
 		int i=0;
+		
 		while (!memberIsFound && i<nbMembers()){
 			memberIsFound=members.get(i).exists(pseudo, password);
 			if (memberIsFound)
@@ -509,6 +536,7 @@ public class SocialNetwork {
 		titre = titre.trim();
 		int i=0;
 		int nbItems = nbBooks() + nbFilms();
+		
 		while (i<nbItems){
 			if(items.get(i) instanceof Book){
 				if(items.get(i).exists(titre)){
@@ -532,6 +560,7 @@ public class SocialNetwork {
 		titre = titre.trim();
 		int i=0;
 		int nbItems = nbBooks() + nbFilms();
+		
 		while (i<nbItems){
 			if(items.get(i) instanceof Film){
 				if(items.get(i).exists(titre)){
