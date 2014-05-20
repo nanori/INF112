@@ -362,8 +362,8 @@ public class SocialNetwork {
 		/*
 		 * Variables
 		 */
-		Member member = authentication(pseudo, password);
-		Film f = getFilm(titre);
+		Member member;
+		Film f;
 		Avis avis;
 		
 		/*
@@ -384,9 +384,11 @@ public class SocialNetwork {
 		if (commentaire == null)
 			throw new BadEntry("Invalid comment");
 		
+		member = authentication(pseudo, password);
 		if(member == null)
 			throw new NotMember("Member does not exist");
 
+		f = getFilm(titre);
 		if(f == null)
 			throw new NotItem("Film does not exist");
 		
@@ -450,8 +452,8 @@ public class SocialNetwork {
 		/*
 		 * Variables
 		 */
-		Member member = authentication(pseudo, password);
-		Book b = getBook(titre);
+		Member member;
+		Book b;
 		Avis avis;
 
 		/*
@@ -472,9 +474,10 @@ public class SocialNetwork {
 		if (commentaire == null)
 			throw new BadEntry("Invalid comment");
 
+		member = authentication(pseudo, password);
 		if(member == null)
 			throw new NotMember("Member does not exist");
-
+		b = getBook(titre); 
 		if(b == null)
 			throw new NotItem("Book does not exist");
 		

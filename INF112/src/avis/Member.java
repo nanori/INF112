@@ -63,7 +63,7 @@ public class Member {
 	 */
 	public boolean exists(String pseudo, String password) {
 	
-		if(this.pseudo.equalsIgnoreCase(pseudo.trim()) && this.password==password){
+		if(this.pseudo.equalsIgnoreCase(pseudo.trim()) && this.password.equals(password)){
 			return true;
 		}else{ 
 			return false;
