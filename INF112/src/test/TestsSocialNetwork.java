@@ -10,6 +10,6 @@ public class TestsSocialNetwork {
 	TestsAddItemFilm.main(new String [0]);
 	TestsReviewItemFilm.main(new String [0]);
 
-	
+	TestsRendementSocialNetwork.main(new String [0]);
 	}
 }
