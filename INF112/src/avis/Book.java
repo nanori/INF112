@@ -1,6 +1,4 @@
 package avis;
-
-
 /**
  * @author Yannick LUCET
  * @author Tom VEILLARD
@@ -34,12 +32,6 @@ public class Book extends Item {
 		this.nbPages = nbPages;
 	}
 	
-	/**
-	 * Retoune un string decrivant le livre
-	 * 
-	 * @return
-	 * 			string decrivant le livre
-	 */
 	public String toString(){
 		String retour=super.toString() +
 					"Auteur : " + auteur + "\n" +

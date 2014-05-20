@@ -2,18 +2,23 @@ package avis;
 
 import java.util.LinkedList;
 /**
- * @author Yannick
- *
+ * @author Yannick LUCET
+ * @author Tom VEILLARD
  */
 public class Member {
 
 	/**
-	 * Le pseudo du membre
+	 * Pseudo du membre
+	 * 
+	 * @see Member#exists(String)
+	 * @see Member#exists(String, String)
 	 */
 	private String pseudo;
 	
 	/**
 	 * Mot de passe du membre
+	 * 
+	 * @see Member#exists(String, String)
 	 */
 	private String password;
 	
@@ -36,8 +41,6 @@ public class Member {
 	 * 			Mot de passe du membre
 	 * @param profil
 	 * 			Profil du membre
-	 * @param socialNetwork
-	 * 			Le SocialNetwork
 	 */
 	public Member(String pseudo, String password, String profil){
 		this.pseudo=pseudo;
@@ -46,9 +49,8 @@ public class Member {
 		avis = new LinkedList<Avis>();
 	}
 	
-	
 	/**
-	 * Test si le couple pseudo mot de passe corespond au membre.<br>
+	 * Test si le couple pseudo mot de passe correspond au membre.<br>
 	 * Les espaces avant et apres le titre en parametre sont ignorés. La methode n'est pas sensible à la casse.
 	 * @param pseudo
 	 * 			Pseudo à tester
@@ -60,7 +62,7 @@ public class Member {
 	 * 			Faux si non
 	 */
 	public boolean exists(String pseudo, String password) {
-		
+	
 		if(this.pseudo.equalsIgnoreCase(pseudo.trim()) && this.password==password){
 			return true;
 		}else{ 
@@ -92,15 +94,16 @@ public class Member {
 	}
 	
 	/**
-	 * Renvoi l'avis de l'item passé en paramettre
+	 * Renvoi l'avis de l'item passé en parametre
 	 * 
 	 * @param item
-	 * 			Item de réferance
+	 * 			Item de réference
 	 * @return
 	 * 			Avis concerné par l'item ou null si l'item n'a pas été noté par ce membre
 	 */
 	public Avis getReview(Item item){
 		int i=0;
+		
 		while (i<avis.size()){
 			if (avis.get(i).itemEquals(item))
 				return avis.get(i);

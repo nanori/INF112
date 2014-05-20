@@ -41,12 +41,6 @@ public class Film extends Item {
 		this.realisateur=realisateur;
 	}
 
-	/**
-	 * Retoune un string decrivant le film
-	 * 
-	 * @return
-	 * 			string decrivant le film
-	 */
 	public String toString(){
 		String retour=super.toString() +
 					"Realisateur : " + realisateur + "\n" +

@@ -10,7 +10,7 @@ import java.util.LinkedList;
 public abstract class Item {
 	
 	/**
-	 * Le titre de l'item
+	 * Titre de l'item
 	 * 
 	 * @see Item#Item(String, String)
 	 * @see Item#exists(String)
@@ -18,7 +18,7 @@ public abstract class Item {
 	private String titre;
 	
 	/**
-	 * Le genre de l'item
+	 * Genre de l'item
 	 * 
 	 * @see Item#Item(String, String)
 	 */
@@ -35,16 +35,15 @@ public abstract class Item {
 	 * A la construction d'un item, la liste avis est instanciée avec une liste vide.
 	 * 
 	 * @param titre
-	 * 			Le titre de l'item à créer
+	 * 			Titre de l'item à créer
 	 * @param genre
-	 * 			le genre de l'item créer
+	 * 			Genre de l'item créer
 	 */
 	public Item (String titre, String genre){
 		this.avis = new LinkedList<Avis>();
 		this.titre = titre.trim();
 		this.genre = genre;
 	}
-	
 		
 	/**
 	 * Test si le titre en parametre correspond au titre de l'item.
@@ -76,7 +75,7 @@ public abstract class Item {
 	}
 	
 	/**
-	 * Calcul et retourne la moyenne des notes sur l'item
+	 * Calcule et retourne la moyenne des notes sur l'item
 	 * 
 	 * @return
 	 * 			Moyenne des notes de l'item

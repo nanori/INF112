@@ -1,5 +1,4 @@
 package avis;
-
 /**
  * @author Yannick LUCET
  * @author Tom VEILLARD 
@@ -7,32 +6,29 @@ package avis;
 public class Avis {
 
 	/**
-	 * La note donnée par le membre
+	 * Note donnée par le membre
 	 * 
-	 * @see Avis#Avis(float, String, Item, Member)
+	 * @see Avis#getNote()
+	 * @see Avis#update(float, String)
 	 */
 	private float note;
 	
 	/**
-	 * Le commentaire associé à l'avis
+	 * Commentaire associé à l'avis
 	 * 
-	 * @see Avis#Avis(float, String, Item, Member)
-	 * @see Avis#getNote()
+	 * @see Avis#update(float, String)
 	 */
 	private String commentaire;
 	
 	/**
 	 * L'Item concerné par l'avis
 	 * 
-	 * @see Avis#Avis(float, String, Item, Member)
+	 * @see Avis#itemEquals(Item)
 	 */
-	
 	private Item item;
 	
 	/**
 	 * Le membre qui a déposé l'avis
-	 * 
-	 * @see Avis#Avis(float, String, Item, Member)
 	 */
 	private Member member;
 	
@@ -68,7 +64,7 @@ public class Avis {
 	}
 	
 	/**
-	 * Test si l'item en parametre corespond à l'item de l'avis
+	 * Test si l'item en parametre correspond à l'item de l'avis
 	 * 
 	 * @param item
 	 * 			Item à tester
