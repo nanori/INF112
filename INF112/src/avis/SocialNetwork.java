@@ -99,25 +99,18 @@ public class SocialNetwork {
 	 * 			membre de même pseudo déjà  présent dans le <i>SocialNetwork</i> (même pseudo : indifférent à   la casse  et aux leadings et trailings blanks)
 	 * 
 	 */
-	
 	public void addMember(String pseudo, String password, String profil) throws BadEntry, MemberAlreadyExists {
-		
-		// pseudo null OU taille du pseudo inferieur a 1 caractere OU pseudo
-		// composé uniquement de blancs
-		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?")) {
+		/*
+		 * Tests des paramettre d'entrés
+		 */
+		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?"))
 			throw new BadEntry("Invalid username");
-		}
-
-		// password non instancié OU taille inferieure a 4 (leading et trailing
-		// blanks ignorés)
-		if (password == null || password.trim().length() < 4) {
+		
+		if (password == null || password.trim().length() < 4)
 			throw new BadEntry("Invalid password");
-		}
 
-		// profil non instancié
-		if (profil == null) {
+		if (profil == null)
 			throw new BadEntry("Invalid profile");
-		}
 
 		int i = 0;
 		boolean memberIsFound = false;
@@ -126,11 +119,12 @@ public class SocialNetwork {
 			i++;
 		}
 
-		// si membre de meme pseudo existant
-		if (memberIsFound) {
+		if (memberIsFound)
 			throw new MemberAlreadyExists();
-		}
-
+		
+		/*
+		 * Ajout du nouveau membre
+		 */
 		Member membre = new Member(pseudo, password, profil);
 		members.addLast(membre);
 	}
@@ -179,7 +173,9 @@ public class SocialNetwork {
 	 * 
 	 */
 	public void addItemFilm(String pseudo, String password, String titre, String genre, String realisateur, String scenariste, int duree) throws BadEntry, NotMember, ItemFilmAlreadyExists {
-		//Tests des parametres d'entrés
+		/*
+		 * Tests des paramettre d'entrés
+		 */
 		if(pseudo==null || pseudo.trim().length()<1)
 			throw new BadEntry("Invalid pseudo");
 		
@@ -201,15 +197,15 @@ public class SocialNetwork {
 		if(duree <= 0)
 			throw new BadEntry("Invalid running time");
 		
-		//Authentification
 		if(authentication(pseudo, password)==null)
 			throw new NotMember("Member does not exist");
 		
-		//Test de l'existance de l'item
 		if (getFilm(titre) != null)
 			throw new ItemFilmAlreadyExists();
 				
-		//Ajout du film
+		/*
+		 * Ajout du film
+		 */
 		items.add(new Film(titre, genre, realisateur, scenariste, duree));
 		
 	}
@@ -253,6 +249,9 @@ public class SocialNetwork {
 	 * @throws ItemBookAlreadyExists item livre de même titre  déjà  présent (même titre : indifférent à  la casse  et aux leadings et trailings blanks)
 	 */
 	public void addItemBook(String pseudo, String password, String titre, String genre, String auteur, int nbPages) throws BadEntry, NotMember, ItemBookAlreadyExists {
+		/*
+		 * Tests des paramettre d'entrés
+		 */
 		if(pseudo==null || pseudo.trim().length()<1)
 			throw new BadEntry("Invalid pseudo");
 		
@@ -271,16 +270,15 @@ public class SocialNetwork {
 		if(nbPages <= 0)
 			throw new BadEntry("Invalid page number");
 		
-		//Authentification
 		if(authentication(pseudo, password)==null)
 			throw new NotMember("Member does not exist");
-				
 		
-		//Test de l'existance de l'item
 		if (getBook(titre) != null)
 			throw new ItemBookAlreadyExists();
 		
-		//Ajout du film
+		/*
+		 * Ajout du livre
+		 */
 		items.add(new Book(titre, genre, auteur, nbPages));
 
 	}
@@ -301,7 +299,7 @@ public class SocialNetwork {
 	 */
 	public LinkedList<String> consultItems(String nom) throws BadEntry {
 		LinkedList<String> returnList = new LinkedList<String>();
-		
+		nom = nom.trim();
 		if (getBook(nom) != null)
 			returnList.add(getBook(nom).toString());
 		
@@ -508,6 +506,7 @@ public class SocialNetwork {
 	 */
 	private Book getBook(String titre){
 		Book b = null;
+		titre = titre.trim();
 		int i=0;
 		int nbItems = nbBooks() + nbFilms();
 		while (i<nbItems){
@@ -530,6 +529,7 @@ public class SocialNetwork {
 	 */
 	private Film getFilm(String titre){
 		Film b = null;
+		titre = titre.trim();
 		int i=0;
 		int nbItems = nbBooks() + nbFilms();
 		while (i<nbItems){
