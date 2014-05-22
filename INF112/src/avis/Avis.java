@@ -53,7 +53,7 @@ public class Avis {
 		this.commentaire = commentaire;
 		this.item = item;
 		this.member = member;
-		ponderation=member.whatIsYourKarma();
+		ponderation=member.getKarma();
 	}
 	
 	/**
@@ -99,7 +99,7 @@ public class Avis {
 	 * Met à jour la pondération de la note laissée par un Membre sur l'Avis
 	 */
 	public void updatePonderation(){
-		this.ponderation = member.whatIsYourKarma();
+		this.ponderation = member.getKarma();
 	}
 	
 	public String toString(){

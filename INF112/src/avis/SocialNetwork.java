@@ -1,7 +1,5 @@
 package avis;
-/**
- * 
- */
+
 import java.util.LinkedList;
 
 import exception.BadEntry;
@@ -676,7 +674,6 @@ public class SocialNetwork {
 		return memberToMark.updateKarma();
 		
 	}
-	
 	
 	/**
 	 * Renvoie le Membre associé au pseudo passé en parametre

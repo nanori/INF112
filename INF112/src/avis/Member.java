@@ -24,6 +24,7 @@ public class Member {
 	
 	/**
 	 * Profil du membre
+	 * 
 	 */
 	private String profil;
 	
@@ -202,7 +203,7 @@ public class Member {
 	 * @return
 	 * 			Karma du Membre
 	 */
-	public float whatIsYourKarma(){
+	public float getKarma(){
 		return karma;
 	}
 	
