@@ -571,32 +571,9 @@ public class SocialNetwork {
 		}
 		return b;
 	}
-	
-	public String toString() {
-		String retour;
 		
-		retour="Social Network : \n" +
-				"Les membres: \n";
-		for(int i=0; i<nbMembers(); i++) {
-			retour += members.get(i).toString();
-		}
-		retour += "Les films : \n";		
-		for(int i=0; i<items.size(); i++) {
-			if(items.get(i) instanceof Film){
-				retour += items.get(i).toString();
-			}
-		}
-		retour += "Les livres : \n";		
-		for(int i=0; i<items.size(); i++) {
-			if(items.get(i) instanceof Book){
-				retour += items.get(i).toString();
-			}
-		}
-		return retour;
-	}
-	
 	/**
-	 * Dépose une opinion sur l'avis laissé par un membre sur un livre
+	 * Dépose une opinion sur l'avis laissé par un membre sur un item
 	 * 
 	 * @param pseudo
 	 * 			Pseudo du Membre qui donne une Opinion
@@ -605,12 +582,16 @@ public class SocialNetwork {
 	 * @param pseudoMemberToReview
 	 * 			Pseudo du membre à noter
 	 * @param titre
-	 * 			Titre du livre sur lequel l'avis à noter à été laissé
+	 * 			Titre de l'item sur lequel l'avis à noter à été laissé
+	 * @param itemType
+	 * 			Type de l'item concerné par l'avis
 	 * @param opinion
 	 * 			Opinion à laisser par le membre sur l'avis
+	 * 
 	 * @return
 	 * 			Le nouveau karma du membre
-	 * @throws NotItem : si le titre n'est pas celui d'un livre
+	 * 
+	 * @throws NotItem : si le titre ne correspond pas a un item du type spécifié
 	 * @throws BadEntry : 
 	 * <ul>
 	 *  <li>  si le pseudo n'est pas instancié ou a moins de 1 caractère autre que des espaces .  </li>
@@ -625,12 +606,12 @@ public class SocialNetwork {
 	 * </ul><br>
 	 * @throws NotReview : si l'avis n'a pas été noté par le membre
 	 */
-	private float reviewOpinionBook(String pseudo, String password, String pseudoMemberToReview, String titre, boolean opinion) throws NotItem, BadEntry, NotMember, NotReview {
+	public float reviewOpinion(String pseudo, String password, String pseudoMemberToReview, String titre, itemsTypes itemType, boolean opinion) throws NotItem, BadEntry, NotMember, NotReview{
 		/*
 		 * Variables
 		 */
 		Member member, memberToMark;
-		Book b;
+		Item i;
 		Opinion o;
 		Avis avis;
 
@@ -656,12 +637,25 @@ public class SocialNetwork {
 		memberToMark = memberExists(pseudoMemberToReview);
 		if (memberToMark == null)
 			throw new NotMember("Member " + pseudoMemberToReview + " does not exist");
-			
-		b = getBook(titre);
-		if (b == null) 
+		
+		
+		switch (itemType) {
+			case BOOK :
+				i = getBook(titre);
+				break;
+				
+			case FILM :
+				i = getFilm(titre);
+				break;
+				
+			default :
+				throw new BadEntry("Error while marking member");
+		}
+		
+		if (i == null) 
 			throw new NotItem("Book " + titre + " does not exist");
 		
-		avis = memberToMark.getReview(b);
+		avis = memberToMark.getReview(i);
 		if (avis == null)
 			throw new NotReview();
 		
@@ -675,29 +669,14 @@ public class SocialNetwork {
 		} else {
 			o.updateOpinion(opinion);
 		}
-		
+
 		/*
 		 * Mise a jour du karma
 		 */
 		return memberToMark.updateKarma();
-	}
-
-	private float reviewOpinionFilm(String pseudo, String password, String memberToReview, String titre, boolean opinion) throws NotItem, BadEntry, NotMember{
-		return 0;
+		
 	}
 	
-	public float reviewOpinion(String pseudo, String password, String memberToReview, String titre, itemsTypes itemType, boolean opinion) throws NotItem, BadEntry, NotMember, NotReview{
-		switch (itemType) {
-		case BOOK :
-			return reviewOpinionBook(pseudo, password, memberToReview, titre, opinion);
-		
-		case FILM :
-			return reviewOpinionFilm(pseudo, password, memberToReview, titre, opinion);
-		
-		default :
-			throw new BadEntry("Error while marking member");
-		}
-	}
 	
 	/**
 	 * Renvoie le Membre associé au pseudo passé en parametre
@@ -719,4 +698,26 @@ public class SocialNetwork {
 		return null;
 	}
 
+	public String toString() {
+		String retour;
+		
+		retour="Social Network : \n" +
+				"Les membres: \n";
+		for(int i=0; i<nbMembers(); i++) {
+			retour += members.get(i).toString();
+		}
+		retour += "Les films : \n";		
+		for(int i=0; i<items.size(); i++) {
+			if(items.get(i) instanceof Film){
+				retour += items.get(i).toString();
+			}
+		}
+		retour += "Les livres : \n";		
+		for(int i=0; i<items.size(); i++) {
+			if(items.get(i) instanceof Book){
+				retour += items.get(i).toString();
+			}
+		}
+		return retour;
+	}
 }
