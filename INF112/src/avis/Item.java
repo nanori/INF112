@@ -75,10 +75,10 @@ public abstract class Item {
 	}
 	
 	/**
-	 * Calcule et retourne la moyenne des notes sur l'item
+	 * Calcule et retourne la moyenne des notes pondérées sur l'item
 	 * 
 	 * @return
-	 * 			Moyenne des notes de l'item
+	 * 			Moyenne des notes pondérées de l'item
 	 */
 	public float getMoyenne(){
 		float moy=0;

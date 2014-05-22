@@ -57,10 +57,10 @@ public class Avis {
 	}
 	
 	/**
-	 *Retourne la note de déposée par le membre sur cet avis.
+	 *Retourne la note et sa pondération déposée par le membre sur cet avis.
 	 * 
 	 * @return
-	 * 			Note associée à l'avis
+	 * 			Tableau contenant la note et sa pondération associée à l'avis
 	 */
 	public float [] getNote(){
 		float r [] = {note, ponderation};
@@ -95,6 +95,9 @@ public class Avis {
 		this.commentaire = commentaire;
 	}
 	
+	/**
+	 * Met à jour la pondération de la note laissée par un Membre sur l'Avis
+	 */
 	public void updatePonderation(){
 		this.ponderation = member.whatIsYourKarma();
 	}

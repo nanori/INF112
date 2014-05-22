@@ -38,7 +38,10 @@ public class Member {
 	private LinkedList <Opinion> opinions;
 	
 	/**
-	 * Karma du membre. Flotant compris entre 0 et 2. Plus le karma du membre est élevé, plus ses Avis sont importante.
+	 * Karma du membre. 
+	 * <br>
+	 * Flottant compris entre 0 et 2.<br>
+	 * Plus les Opinions sur ses Avis sont positifs, plus le karma du membre est élevé
 	 */
 	private float karma;
 	
@@ -148,11 +151,23 @@ public class Member {
 		return null;
 	}
 	
+	/**
+	 * Ajoute une nouvelle Opinion dans la liste des Opinion laissées sur le Membre
+	 * 
+	 * @param opinion
+	 * 			Nouvelle Opinion à ajouter
+	 */
 	public void addOpinion(Opinion opinion){
 		this.opinions.addLast(opinion);
 		//System.err.println("("+this.pseudo+")addOpinion Member : Taille opinions apres ajout = "+ opinions.size());
 	}
 	
+	/**
+	 * Met à jour le Karma d'un Membre à partir des Opinion laissées sur ses Avis
+	 * 
+	 * @return
+	 * 			Nouveau karma
+	 */
 	public float updateKarma(){
 		int i = 0;
 		int somme = 0;
@@ -183,6 +198,10 @@ public class Member {
 		return karma;
 	}
 	
+	/**
+	 * @return
+	 * 			Karma du Membre
+	 */
 	public float whatIsYourKarma(){
 		return karma;
 	}
