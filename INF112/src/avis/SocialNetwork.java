@@ -622,7 +622,7 @@ public class SocialNetwork {
 		if (password == null || password.trim().length() < 4)
 			throw new BadEntry("Invalid password");
 		
-		if (pseudoMemberToReview == null || pseudo.trim().length() < 1 || pseudo.matches("\\p{Space}+?"))
+		if (pseudoMemberToReview == null || pseudoMemberToReview.trim().length() < 1 || pseudoMemberToReview.matches("\\p{Space}+?"))
 			throw new BadEntry("Invalid username : " + pseudoMemberToReview);
 
 		if (titre==null || titre.trim().length() < 1)

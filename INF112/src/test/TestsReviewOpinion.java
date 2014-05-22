@@ -81,7 +81,6 @@ public class TestsReviewOpinion {
 		reviewOpinionBadEntry(sn, "geubeutreu", " y ", "pseudo5", "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion avec un password de moins de 4 caractère est acceptée");
 		reviewOpinionBadEntry(sn, "geubeutreu", "123456", null, "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion sur un pseudo non instancié est acceptée");
 		reviewOpinionBadEntry(sn, "geubeutreu", "123456", " ", "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion sur un pseudo de moins d'un caractère est acceptée");
-		reviewOpinionBadEntry(sn, "geubeutreu", "123456", "pseudo", "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion sur un pseudo de moins d'un caractère est acceptée");
 		
 		// reviewOpinionOK(sn, pseudo, password, memberToReview, titre,
 		// itemType, opinion, idTest, messErreur)
