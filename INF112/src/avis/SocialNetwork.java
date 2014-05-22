@@ -616,14 +616,17 @@ public class SocialNetwork {
 		/*
 		 * Tests des paramettres d'entrés
 		 */
-		if (pseudo == null || pseudo.length() < 1 || pseudo.matches("\\p{Space}+?"))
-			throw new BadEntry("Invalid username");
+		if (pseudo == null || pseudo.trim().length() < 1 || pseudo.matches("\\p{Space}+?"))
+			throw new BadEntry("Invalid username : " + pseudo);
 		
 		if (password == null || password.trim().length() < 4)
 			throw new BadEntry("Invalid password");
+		
+		if (pseudoMemberToReview == null || pseudo.trim().length() < 1 || pseudo.matches("\\p{Space}+?"))
+			throw new BadEntry("Invalid username : " + pseudoMemberToReview);
 
 		if (titre==null || titre.trim().length() < 1)
-			throw new BadEntry("Invalid title");
+			throw new BadEntry("Invalid title : " + titre);
 		
 		member = authentication(pseudo, password);
 		if (member == null)
@@ -631,7 +634,7 @@ public class SocialNetwork {
 		
 		memberToMark = memberExist(pseudoMemberToReview);
 		if (memberToMark == null)
-			throw new NotMember("Member " + pseudo + " does not exist");
+			throw new NotMember("Member " + pseudoMemberToReview + " does not exist");
 			
 		b = getBook(titre);
 		if (b == null) 
