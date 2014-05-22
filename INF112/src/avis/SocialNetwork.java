@@ -1,5 +1,7 @@
 package avis;
-
+/**
+ * 
+ */
 import java.util.LinkedList;
 
 import exception.BadEntry;
@@ -9,8 +11,12 @@ import exception.MemberAlreadyExists;
 import exception.NotItem;
 import exception.NotMember;
 import exception.NotReview;
-
+/**
+ * @author Yannick LUCET
+ * @author Tom VEILLARD
+ */
 public class SocialNetwork {
+
 	public enum itemsTypes {
 		BOOK,
 		FILM
@@ -300,8 +306,7 @@ public class SocialNetwork {
 	 * @return 
 	 * 			Liste des items trouvé sous forme verbeuse
 	 * 
-	 * @throws BadEntry 
-	 * 			si le nom n'est pas instancié ou a moins de 1 caractère autre que des espaces.
+	 * @throws BadEntry : si le nom n'est pas instancié ou a moins de 1 caractère autre que des espaces.
 	 */
 	public LinkedList<String> consultItems(String nom) throws BadEntry {
 		/*
@@ -324,14 +329,7 @@ public class SocialNetwork {
 	}
 
 	/**
-	 * Dépose un avis sur un film<br>
-	 * <br>
-	 * Le pseudo doit contenir au moins 1 caractere autre que des espaces<br>
-	 * Le mot de passe doit contenir au moins 4 caractere autre que les leading et trailling blanks<br>
-	 * Le titre doit contenir au moins un caractere<br>
-	 * La note doit être comprise entre 0 et 5<br>
-	 * Le pseudo et le password doivent désigner un membre<br>
-	 * Le film doit exister
+	 * Dépose un avis sur un film
 	 * 
 	 * @param pseudo
 	 * 			Pseudo du membre qui dépose l'avis
@@ -416,14 +414,7 @@ public class SocialNetwork {
 	}
 
 	/**
-	 * Dépose un avis sur un livre<br>
-	 * <br>
-	 * Le pseudo doit contenir au moins 1 caractere autre que des espaces<br>
-	 * Le mot de passe doit contenir au moins 4 caractere autre que les leading et trailling blanks<br>
-	 * Le titre doit contenir au moins 1 caractere<br>
-	 * La note doit être comprise entre 0 et 5<br>
-	 * Le pseudo et le password doivent désigner un membre<br>
-	 * Le livre doit exister
+	 * Dépose un avis sur un livre
 	 * 
 	 * @param pseudo
 	 * 			Pseudo du membre qui dépose l'avis
@@ -604,6 +595,36 @@ public class SocialNetwork {
 		return retour;
 	}
 	
+	/**
+	 * Dépose une opinion sur l'avis laissé par un membre sur un livre
+	 * 
+	 * @param pseudo
+	 * 			Pseudo du Membre qui donne une Opinion
+	 * @param password
+	 * 			Mot de passe du Membre qui donne une Opinion
+	 * @param pseudoMemberToReview
+	 * 			Pseudo du membre à noter
+	 * @param titre
+	 * 			Titre du livre sur lequel l'avis à noter à été laissé
+	 * @param opinion
+	 * 			Opinion à laisser par le membre sur l'avis
+	 * @return
+	 * 			Le nouveau karma du membre
+	 * @throws NotItem : si le titre n'est pas celui d'un livre
+	 * @throws BadEntry : 
+	 * <ul>
+	 *  <li>  si le pseudo n'est pas instancié ou a moins de 1 caractère autre que des espaces .  </li>
+	 *  <li>  si le password n'est pas instancié ou a moins de 4 caractères autres que des leadings or trailing blanks. </li>
+	 *  <li>  si le pseudo du membre à noter n'est pas instancié ou a moins de 1 caractère autre que des espaces .  </li>
+	 *  <li>  si le titre n'est pas instancié ou a moins de 1 caractère autre que des espaces.  </li>
+	 * </ul><br>  
+	 * @throws NotMember : 
+	 * <ul>
+	 * 	<li>  si le pseudo n'est pas celui d'un membre ou si le pseudo et le password ne correspondent pas
+	 * 	<li>  si le pseudo du membre à noter n'existe pas
+	 * </ul><br>
+	 * @throws NotReview : si l'avis n'a pas été noté par le membre
+	 */
 	private float reviewOpinionBook(String pseudo, String password, String pseudoMemberToReview, String titre, boolean opinion) throws NotItem, BadEntry, NotMember, NotReview {
 		/*
 		 * Variables
@@ -632,7 +653,7 @@ public class SocialNetwork {
 		if (member == null)
 			throw new NotMember("Member " + pseudo + " does not exist or the password is wrong");
 		
-		memberToMark = memberExist(pseudoMemberToReview);
+		memberToMark = memberExists(pseudoMemberToReview);
 		if (memberToMark == null)
 			throw new NotMember("Member " + pseudoMemberToReview + " does not exist");
 			
@@ -678,7 +699,16 @@ public class SocialNetwork {
 		}
 	}
 	
-	private Member memberExist (String pseudo) {
+	/**
+	 * Renvoie le Membre associé au pseudo passé en parametre
+	 * 
+	 * @param pseudo
+	 * 			Pseudo du membre à rechercher
+	 * @return
+	 * 			Le membre associé au pseudo passé en parametre
+	 * 			Null si le membre n'existe pas
+	 */
+	private Member memberExists (String pseudo) {
 		int i = 0;
 		while (i < nbMembers()) {
 			if(members.get(i).exists(pseudo))
