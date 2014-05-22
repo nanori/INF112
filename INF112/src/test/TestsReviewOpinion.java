@@ -8,6 +8,7 @@ import exception.ItemBookAlreadyExists;
 import exception.MemberAlreadyExists;
 import exception.NotItem;
 import exception.NotMember;
+import exception.NotReview;
 import avis.SocialNetwork;
 import avis.SocialNetwork.itemsTypes;
 
@@ -15,6 +16,54 @@ public class TestsReviewOpinion {
 	public static int cptErr;
 	public static int cptOk;
 
+	public static float reviewOpinionNotReview(SocialNetwork sn, String pseudo, String password, String memberToReview, String titre, itemsTypes itemType, boolean opinion, String idTest, String messErreur) {
+		float r = 0;
+		try {
+			r = sn.reviewOpinion(pseudo, password, memberToReview, titre, itemType, opinion);
+			System.err.println("Test " + idTest + " : " + messErreur);
+			cptOk++;
+		} catch (NotReview e){
+			
+		} catch (Exception e) {
+			System.err.println("Test " + idTest + " : exception non prévue. " + e);
+			e.printStackTrace();
+			cptErr++;
+		}
+		return r;
+	}
+	
+	public static float reviewOpinionNotItem(SocialNetwork sn, String pseudo, String password, String memberToReview, String titre, itemsTypes itemType, boolean opinion, String idTest, String messErreur) {
+		float r = 0;
+		try {
+			r = sn.reviewOpinion(pseudo, password, memberToReview, titre, itemType, opinion);
+			System.err.println("Test " + idTest + " : " + messErreur);
+			cptOk++;
+		} catch (NotItem e){
+			
+		} catch (Exception e) {
+			System.err.println("Test " + idTest + " : exception non prévue. " + e);
+			e.printStackTrace();
+			cptErr++;
+		}
+		return r;
+	}
+	
+	public static float reviewOpinionNotMember(SocialNetwork sn, String pseudo, String password, String memberToReview, String titre, itemsTypes itemType, boolean opinion, String idTest, String messErreur) {
+		float r = 0;
+		try {
+			r = sn.reviewOpinion(pseudo, password, memberToReview, titre, itemType, opinion);
+			System.err.println("Test " + idTest + " : " + messErreur);
+			cptOk++;
+		} catch (NotMember e){
+			
+		} catch (Exception e) {
+			System.err.println("Test " + idTest + " : exception non prévue. " + e);
+			e.printStackTrace();
+			cptErr++;
+		}
+		return r;
+	}
+	
 	public static float reviewOpinionBadEntry(SocialNetwork sn, String pseudo, String password, String memberToReview, String titre, itemsTypes itemType, boolean opinion, String idTest, String messErreur) {
 		float r = 0;
 		try {
@@ -66,7 +115,8 @@ public class TestsReviewOpinion {
 			sn.addItemFilm("geubeutreu", "123456", "X-Men", "biopic", "Charle X", "Charle X", 200);
 			
 			// Review des Items
-			reviewBook(sn, 30, "Le Cidre");
+			reviewBook(sn, 5, "Le Cidre");
+			sn.reviewItemBook("Jean", "123456", "Le Cidre", 0, "Vive le jus de raisin");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -76,20 +126,45 @@ public class TestsReviewOpinion {
 		 * Test 1 : Levée d'exeption BadEntry
 		 */
 		reviewOpinionBadEntry(sn, null, "123456", "pseudo5", "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion avec un pseudo non instancié est acceptée");
-		reviewOpinionBadEntry(sn, " ", "123456", "pseudo5", "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion avec un pseudo de moins d'un caractère est acceptée");
-		reviewOpinionBadEntry(sn, "geubeutreu", null, "pseudo5", "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion avec un password non instancié est acceptée");
-		reviewOpinionBadEntry(sn, "geubeutreu", " y ", "pseudo5", "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion avec un password de moins de 4 caractère est acceptée");
-		reviewOpinionBadEntry(sn, "geubeutreu", "123456", null, "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion sur un pseudo non instancié est acceptée");
-		reviewOpinionBadEntry(sn, "geubeutreu", "123456", " ", "Le Cidre", itemsTypes.BOOK, true, "1.1", "L'ajout d'une opinion sur un pseudo de moins d'un caractère est acceptée");
+		reviewOpinionBadEntry(sn, " ", "123456", "pseudo5", "Le Cidre", itemsTypes.BOOK, true, "1.2", "L'ajout d'une opinion avec un pseudo de moins d'un caractère est acceptée");
+		reviewOpinionBadEntry(sn, "geubeutreu", null, "pseudo5", "Le Cidre", itemsTypes.BOOK, true, "1.3", "L'ajout d'une opinion avec un password non instancié est acceptée");
+		reviewOpinionBadEntry(sn, "geubeutreu", " y ", "pseudo5", "Le Cidre", itemsTypes.BOOK, true, "1.4", "L'ajout d'une opinion avec un password de moins de 4 caractère est acceptée");
+		reviewOpinionBadEntry(sn, "geubeutreu", "123456", null, "Le Cidre", itemsTypes.BOOK, true, "1.5", "L'ajout d'une opinion sur un pseudo non instancié est acceptée");
+		reviewOpinionBadEntry(sn, "geubeutreu", "123456", " ", "Le Cidre", itemsTypes.BOOK, true, "1.6", "L'ajout d'une opinion sur un pseudo de moins d'un caractère est acceptée");
 		
-		// reviewOpinionOK(sn, pseudo, password, memberToReview, titre,
-		// itemType, opinion, idTest, messErreur)
-		karma = reviewOpinionOK(sn, "geubeutreu", "123456", "Jean", "Le Cidre", itemsTypes.BOOK, true, "1.1", "Not good");
-		System.out.println("Karma de Jean : " + karma);
+		/*
+		 * Test 2 : Levées d'exeptions NotItem
+		 */
+		reviewOpinionNotItem(sn, "geubeutreu", "123456", "Jean", "Le Vin", itemsTypes.BOOK, true, "2.1", "L'ajout d'une opinion sur un item n'existant pas est acceptée");
+
+		/*
+		 * Test 3 : Levées d'exeptions NotReview
+		 */
+		reviewOpinionNotReview(sn, "geubeutreu", "123456", "Jean", "En rouge et noir", itemsTypes.BOOK, true, "3.1", "L'ajout d'une opinion sur un avis n'existant pas est acceptée (Mauvais livres)");
+		reviewOpinionNotReview(sn, "geubeutreu", "123456", "geubeutreu", "Le Cidre", itemsTypes.BOOK, true, "3.2", "L'ajout d'une opinion sur un avis n'existant pas est acceptée (Mauvais membre)");
+
+		/*
+		 * Test 4 : Levées d'exeptions NotMember
+		 */
+		reviewOpinionNotMember(sn, "gubutru", "123456", "Jean", "Le Cidre", itemsTypes.BOOK, true, "4.1", "L'ajout d'une opinion avec un membre n'existant pas est acceptée");
+		reviewOpinionNotMember(sn, "geubeutreu", "1234", "Jean", "Le Cidre", itemsTypes.BOOK, true, "4.2", "L'ajout d'une opinion avec un password ne correspondant pas au membre est acceptée");
+		reviewOpinionNotMember(sn, "geubeutreu", "123456", "Bon", "Le Cidre", itemsTypes.BOOK, true, "4.3", "L'ajout d'une opinion sur un membre n'existant pas est acceptée");
+		
+		/*
+		 * Test 5 : Déroulement normal
+		 */
 		try {
-			System.err.println(sn.consultItems("Le Cidre"));
-		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(sn.consultItems("Le Cidre"));
+			karma = reviewOpinionOK(sn, "geubeutreu", "123456", "Jean", "Le Cidre", itemsTypes.BOOK, false, "5.1", "Not good");
+			System.out.println("Karma de Jean : " + karma);
+			
+			System.out.println(sn.consultItems("Le Cidre"));
+			
+			karma = reviewOpinionOK(sn, "geubeutreu", "123456", "Jean", "Le Cidre", itemsTypes.BOOK, true, "5.2", "Not good");
+			System.out.println("Karma de Jean : " + karma);
+			System.out.println(sn.consultItems("Le Cidre"));
+		} catch (BadEntry e1) {
+			e1.printStackTrace();
 		}
 	}
 
@@ -118,7 +193,7 @@ public class TestsReviewOpinion {
 		float moy = 0;
 		Random r = new Random();
 		while(i <nbReview){
-			moy = sn.reviewItemBook("pseudo" + i, "passwd", bookTitle, r.nextFloat(), "Note de pseudo" + i);
+			moy = sn.reviewItemBook("pseudo" + i, "passwd", bookTitle, 5*r.nextFloat(), "Note de pseudo" + i);
 			i++;
 		}
 		return moy;
