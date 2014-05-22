@@ -88,9 +88,9 @@ public abstract class Item {
 		for(int i=0; i<avis.size(); i++){
 			tmpTab=avis.get(i).getNote();
 			sommeNotes += tmpTab[0]*tmpTab[1];
-			System.err.println("tmpTab[0] = " + tmpTab[0] + " tmpTab[1] " + tmpTab[1]);
+			//System.err.println("tmpTab[0] = " + tmpTab[0] + " tmpTab[1] " + tmpTab[1]);
 			sommePonderations += tmpTab[1];
-			System.err.println("sommeNotes = " + sommeNotes + " sommePonderations " + sommePonderations);
+			//System.err.println("sommeNotes = " + sommeNotes + " sommePonderations " + sommePonderations);
 		}
 		moy = sommeNotes / sommePonderations;
 		

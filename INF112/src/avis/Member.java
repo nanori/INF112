@@ -59,7 +59,7 @@ public class Member {
 		avis = new LinkedList<Avis>();
 		opinions = new LinkedList<Opinion>();
 		karma = 1.0f;
-		System.err.println("Constructeur Member : Taille opinions = "+ opinions.size());
+		//System.err.println("Constructeur Member : Taille opinions = "+ opinions.size());
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class Member {
 	
 	public void addOpinion(Opinion opinion){
 		this.opinions.addLast(opinion);
-		System.err.println("("+this.pseudo+")addOpinion Member : Taille opinions apres ajout = "+ opinions.size());
+		//System.err.println("("+this.pseudo+")addOpinion Member : Taille opinions apres ajout = "+ opinions.size());
 	}
 	
 	public float updateKarma(){
