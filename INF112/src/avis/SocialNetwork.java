@@ -22,7 +22,8 @@ public class SocialNetwork {
 	}
 
 	public enum inputsTypes {
-		PASSWORD, PSEUDO, TITRE, GENRE, SCENARISTE, REALISATEUR, AUTEUR, PROFIL, DUREE, NBPAGES, COMMENTAIRE, NOTE
+		PASSWORD, PSEUDO, TITRE, GENRE, SCENARISTE, REALISATEUR, AUTEUR,
+		PROFIL, DUREE, NBPAGES, COMMENTAIRE, NOTE
 	}
 
 	/**
@@ -126,8 +127,7 @@ public class SocialNetwork {
 		checkInput(pseudo, inputsTypes.PSEUDO);
 		checkInput(password, inputsTypes.PASSWORD);
 		checkInput(profil, inputsTypes.PROFIL);
-
-		if (memberExists(pseudo) == null)
+		if (memberExists(pseudo) != null)
 			throw new MemberAlreadyExists();
 
 		/*
@@ -204,11 +204,11 @@ public class SocialNetwork {
 		checkInput(realisateur, inputsTypes.REALISATEUR);
 		checkInput(scenariste, inputsTypes.SCENARISTE);
 		checkInput(duree, inputsTypes.DUREE);
-	
+
 		if (authentication(pseudo, password) == null)
 			throw new NotMember("Member does not exist");
 
-		if (getFilm(titre) != null)
+		if (getItem(titre, itemsTypes.FILM) != null)
 			throw new ItemFilmAlreadyExists();
 
 		/*
@@ -278,11 +278,11 @@ public class SocialNetwork {
 		checkInput(genre, inputsTypes.GENRE);
 		checkInput(auteur, inputsTypes.AUTEUR);
 		checkInput(nbPages, inputsTypes.NBPAGES);
-		
+
 		if (authentication(pseudo, password) == null)
 			throw new NotMember("Member does not exist");
 
-		if (getBook(titre) != null)
+		if (getItem(titre, itemsTypes.BOOK) != null)
 			throw new ItemBookAlreadyExists();
 
 		/*
@@ -317,11 +317,11 @@ public class SocialNetwork {
 		 * Recherche des Items
 		 */
 		LinkedList<String> returnList = new LinkedList<String>();
-		if (getBook(nom) != null)
-			returnList.add(getBook(nom).toString());
+		if (getItem(nom, itemsTypes.BOOK) != null)
+			returnList.add(getItem(nom, itemsTypes.BOOK).toString());
 
-		if (getFilm(nom) != null)
-			returnList.add(getFilm(nom).toString());
+		if (getItem(nom, itemsTypes.FILM) != null)
+			returnList.add(getItem(nom, itemsTypes.FILM).toString());
 
 		return returnList;
 	}
@@ -385,12 +385,12 @@ public class SocialNetwork {
 		checkInput(titre, inputsTypes.TITRE);
 		checkInput(note, inputsTypes.NOTE);
 		checkInput(commentaire, inputsTypes.COMMENTAIRE);
-		
+
 		member = authentication(pseudo, password);
 		if (member == null)
 			throw new NotMember("Member does not exist");
 
-		f = getFilm(titre);
+		f = (Film) getItem(titre, itemsTypes.FILM);
 		if (f == null)
 			throw new NotItem("Film does not exist");
 
@@ -472,7 +472,7 @@ public class SocialNetwork {
 		member = authentication(pseudo, password);
 		if (member == null)
 			throw new NotMember("Member does not exist");
-		b = getBook(titre);
+		b = (Book) getItem(titre, itemsTypes.BOOK);
 		if (b == null)
 			throw new NotItem("Book does not exist");
 
@@ -522,51 +522,41 @@ public class SocialNetwork {
 	}
 
 	/**
-	 * Retourne le livre dont le titre est passé en paramettre
+	 * Retourne l'item du type correspondant à celui passé en paramettre
 	 * 
 	 * @param titre
 	 *            Titre à rechercher
+	 * @param itemType
+	 *            Type de l'item à retourner
 	 * @return Book avec le titre correspondant ou null s'il n'est pas trouvé
 	 */
-	private Book getBook(String titre) {
-		Book b = null;
-		titre = titre.trim();
+	private Item getItem(String titre, itemsTypes itemType) throws BadEntry {
 		int i = 0;
+		Class classType = null;
+		Item item = null;
 		int nbItems = nbBooks() + nbFilms();
+		switch (itemType) {
+		case FILM:
+			classType = Film.class;
+			break;
+
+		case BOOK:
+			classType = Book.class;
+			break;
+
+		default:
+			throw new BadEntry("Error while marking member");
+		}
 
 		while (i < nbItems) {
-			if (items.get(i) instanceof Book) {
+			if (items.get(i).getClass() == classType) {
 				if (items.get(i).exists(titre)) {
-					b = (Book) items.get(i);
+					item = items.get(i);
 				}
 			}
 			i++;
 		}
-		return b;
-	}
-
-	/**
-	 * Retourne le film dont le titre est passé en paramettre
-	 * 
-	 * @param titre
-	 *            Titre à rechercher
-	 * @return Film avec le titre correspondant ou null s'il n'est pas trouvé
-	 */
-	private Film getFilm(String titre) {
-		Film b = null;
-		titre = titre.trim();
-		int i = 0;
-		int nbItems = nbBooks() + nbFilms();
-
-		while (i < nbItems) {
-			if (items.get(i) instanceof Film) {
-				if (items.get(i).exists(titre)) {
-					b = (Film) items.get(i);
-				}
-			}
-			i++;
-		}
-		return b;
+		return item;
 	}
 
 	/**
@@ -643,18 +633,7 @@ public class SocialNetwork {
 			throw new NotMember("Member " + pseudoMemberToReview
 					+ " does not exist");
 
-		switch (itemType) {
-		case BOOK:
-			i = getBook(titre);
-			break;
-
-		case FILM:
-			i = getFilm(titre);
-			break;
-
-		default:
-			throw new BadEntry("Error while marking member");
-		}
+		i = getItem(titre, itemType);
 
 		if (i == null)
 			throw new NotItem("Book " + titre + " does not exist");
@@ -722,15 +701,16 @@ public class SocialNetwork {
 		return retour;
 	}
 
-	public void checkInput(Object input, inputsTypes inputType)
+	private void checkInput(Object input, inputsTypes inputType)
 			throws BadEntry {
 		int integerInput;
+		float floatInput;
 		String stringInput;
 		String errorMessage = "Invalid " + inputType.toString().toLowerCase();
 
 		if (input == null)
 			throw new BadEntry(errorMessage);
-		
+
 		if (input instanceof String) {
 			stringInput = (String) input;
 			switch (inputType) {
@@ -769,14 +749,18 @@ public class SocialNetwork {
 			default:
 				throw new BadEntry(errorMessage);
 			}
-		} else if(input instanceof Float){
+		} else if (input instanceof Float) {
+			floatInput = ((Float) input).floatValue();
 			switch (inputType) {
 			case NOTE:
+				if (floatInput < 0 || floatInput > 5)
+					throw new BadEntry(errorMessage);
+
 				break;
-			default :
+			default:
 				throw new BadEntry(errorMessage);
 			}
-			
+
 		} else {
 			throw new BadEntry(errorMessage);
 		}
