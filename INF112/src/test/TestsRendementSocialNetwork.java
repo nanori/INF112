@@ -12,6 +12,9 @@ public class TestsRendementSocialNetwork {
 		long t0, t1;
 		float moyenne=0;
 		
+		/*
+		 * Calcul du temps moyen d'ajout d'un membre
+		 */
 		try{
 			t0 = System.currentTimeMillis();
 
@@ -39,7 +42,9 @@ public class TestsRendementSocialNetwork {
 			
 		long t0, t1;
 		float moyenne=0;
-		
+		/*
+		 * Calcul du temps moyen d'ajout d'un item
+		 */
 		try{
 			t0 = System.currentTimeMillis();
 			
@@ -78,6 +83,9 @@ public class TestsRendementSocialNetwork {
 		long t0, t1;
 		float moyenne=0;
 		
+		/*
+		 * Calcul du temps moyen d'ajout d'un avis
+		 */
 		try{
 			t0 = System.currentTimeMillis();
 			
@@ -113,6 +121,7 @@ public class TestsRendementSocialNetwork {
 		SocialNetwork sn = new SocialNetwork();
 		
 		System.out.println("Test de rendement du Social Network avec de " + nbTest + " membres, " + nbTest*10 + " items et " + nbTest*10 + " avis");
+		System.out.println("Cette opération peut prendre quelques minutes...");
 		moyenne=addMembers(sn, nbTest);
 		System.out.println("Moyenne temps ajout membre: " + moyenne + " ms");
 		moyenne=addItems(sn, nbTest);
