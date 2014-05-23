@@ -9,6 +9,7 @@ public class TestsSocialNetwork {
 	TestsReviewItemBook.main(new String [0]);
 	TestsAddItemFilm.main(new String [0]);
 	TestsReviewItemFilm.main(new String [0]);
+	TestsReviewOpinion.main(new String[0]);
 
 	
 	}
