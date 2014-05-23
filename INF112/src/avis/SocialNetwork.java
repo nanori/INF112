@@ -1,6 +1,7 @@
 package avis;
 
 import java.util.LinkedList;
+import java.util.logging.ErrorManager;
 
 import exception.BadEntry;
 import exception.ItemFilmAlreadyExists;
@@ -18,6 +19,10 @@ public class SocialNetwork {
 
 	public enum itemsTypes {
 		BOOK, FILM
+	}
+
+	public enum inputsTypes {
+		PASSWORD, PSEUDO, TITRE, GENRE, SCENARISTE, REALISATEUR, AUTEUR, PROFIL, DUREE, NBPAGES, COMMENTAIRE, NOTE
 	}
 
 	/**
@@ -118,15 +123,9 @@ public class SocialNetwork {
 		/*
 		 * Tests des paramettres d'entrés
 		 */
-		if (pseudo == null || pseudo.length() < 1
-				|| pseudo.matches("\\p{Space}+?"))
-			throw new BadEntry("Invalid username");
-
-		if (password == null || password.trim().length() < 4)
-			throw new BadEntry("Invalid password");
-
-		if (profil == null)
-			throw new BadEntry("Invalid profile");
+		checkInput(pseudo, inputsTypes.PSEUDO);
+		checkInput(password, inputsTypes.PASSWORD);
+		checkInput(profil, inputsTypes.PROFIL);
 
 		if (memberExists(pseudo) == null)
 			throw new MemberAlreadyExists();
@@ -198,27 +197,14 @@ public class SocialNetwork {
 		/*
 		 * Tests des paramettres d'entrés
 		 */
-		if (pseudo == null || pseudo.trim().length() < 1)
-			throw new BadEntry("Invalid pseudo");
-
-		if (password == null || password.trim().length() < 4)
-			throw new BadEntry("Invalid password");
-
-		if (titre == null || titre.trim().length() < 1)
-			throw new BadEntry("Invalid title");
-
-		if (genre == null)
-			throw new BadEntry("Invalid movie type");
-
-		if (realisateur == null)
-			throw new BadEntry("Invalid director");
-
-		if (scenariste == null)
-			throw new BadEntry("Invalid scriptwriter");
-
-		if (duree <= 0)
-			throw new BadEntry("Invalid running time");
-
+		checkInput(pseudo, inputsTypes.PSEUDO);
+		checkInput(password, inputsTypes.PASSWORD);
+		checkInput(titre, inputsTypes.TITRE);
+		checkInput(genre, inputsTypes.GENRE);
+		checkInput(realisateur, inputsTypes.REALISATEUR);
+		checkInput(scenariste, inputsTypes.SCENARISTE);
+		checkInput(duree, inputsTypes.DUREE);
+	
 		if (authentication(pseudo, password) == null)
 			throw new NotMember("Member does not exist");
 
@@ -286,24 +272,13 @@ public class SocialNetwork {
 		/*
 		 * Tests des paramettres d'entrés
 		 */
-		if (pseudo == null || pseudo.trim().length() < 1)
-			throw new BadEntry("Invalid pseudo");
-
-		if (password == null || password.trim().length() < 4)
-			throw new BadEntry("Invalid password");
-
-		if (titre == null || titre.trim().length() < 1)
-			throw new BadEntry("Invalid title");
-
-		if (genre == null)
-			throw new BadEntry("Invalid movie genre");
-
-		if (auteur == null)
-			throw new BadEntry("Invalid director");
-
-		if (nbPages <= 0)
-			throw new BadEntry("Invalid page number");
-
+		checkInput(pseudo, inputsTypes.PSEUDO);
+		checkInput(password, inputsTypes.PASSWORD);
+		checkInput(titre, inputsTypes.TITRE);
+		checkInput(genre, inputsTypes.GENRE);
+		checkInput(auteur, inputsTypes.AUTEUR);
+		checkInput(nbPages, inputsTypes.NBPAGES);
+		
 		if (authentication(pseudo, password) == null)
 			throw new NotMember("Member does not exist");
 
@@ -336,8 +311,7 @@ public class SocialNetwork {
 		/*
 		 * Test du paramettre d'entré
 		 */
-		if (nom == null || nom.trim().length() < 1)
-			throw new BadEntry("Invalid title");
+		checkInput(nom, inputsTypes.TITRE);
 
 		/*
 		 * Recherche des Items
@@ -406,22 +380,12 @@ public class SocialNetwork {
 		/*
 		 * Tests des paramettres d'entrés
 		 */
-		if (pseudo == null || pseudo.length() < 1
-				|| pseudo.matches("\\p{Space}+?"))
-			throw new BadEntry("Invalid username");
-
-		if (password == null || password.trim().length() < 4)
-			throw new BadEntry("Invalid password");
-
-		if (titre == null || titre.trim().length() < 1)
-			throw new BadEntry("Invalid title");
-
-		if (note < 0.0 || note > 5.0)
-			throw new BadEntry("Invalid grade");
-
-		if (commentaire == null)
-			throw new BadEntry("Invalid comment");
-
+		checkInput(pseudo, inputsTypes.PSEUDO);
+		checkInput(password, inputsTypes.PASSWORD);
+		checkInput(titre, inputsTypes.TITRE);
+		checkInput(note, inputsTypes.NOTE);
+		checkInput(commentaire, inputsTypes.COMMENTAIRE);
+		
 		member = authentication(pseudo, password);
 		if (member == null)
 			throw new NotMember("Member does not exist");
@@ -499,21 +463,11 @@ public class SocialNetwork {
 		/*
 		 * Tests des paramettres d'entrés
 		 */
-		if (pseudo == null || pseudo.length() < 1
-				|| pseudo.matches("\\p{Space}+?"))
-			throw new BadEntry("Invalid username");
-
-		if (password == null || password.trim().length() < 4)
-			throw new BadEntry("Invalid password");
-
-		if (titre == null || titre.trim().length() < 1)
-			throw new BadEntry("Invalid title");
-
-		if (note < 0.0 || note > 5.0)
-			throw new BadEntry("Invalid grade");
-
-		if (commentaire == null)
-			throw new BadEntry("Invalid comment");
+		checkInput(pseudo, inputsTypes.PSEUDO);
+		checkInput(password, inputsTypes.PASSWORD);
+		checkInput(titre, inputsTypes.TITRE);
+		checkInput(note, inputsTypes.NOTE);
+		checkInput(commentaire, inputsTypes.COMMENTAIRE);
 
 		member = authentication(pseudo, password);
 		if (member == null)
@@ -674,20 +628,10 @@ public class SocialNetwork {
 		/*
 		 * Tests des paramettres d'entrés
 		 */
-		if (pseudo == null || pseudo.trim().length() < 1
-				|| pseudo.matches("\\p{Space}+?"))
-			throw new BadEntry("Invalid username : " + pseudo);
-
-		if (password == null || password.trim().length() < 4)
-			throw new BadEntry("Invalid password");
-
-		if (pseudoMemberToReview == null
-				|| pseudoMemberToReview.trim().length() < 1
-				|| pseudoMemberToReview.matches("\\p{Space}+?"))
-			throw new BadEntry("Invalid username : " + pseudoMemberToReview);
-
-		if (titre == null || titre.trim().length() < 1)
-			throw new BadEntry("Invalid title : " + titre);
+		checkInput(pseudo, inputsTypes.PSEUDO);
+		checkInput(password, inputsTypes.PASSWORD);
+		checkInput(titre, inputsTypes.TITRE);
+		checkInput(pseudoMemberToReview, inputsTypes.PSEUDO);
 
 		member = authentication(pseudo, password);
 		if (member == null)
@@ -776,5 +720,65 @@ public class SocialNetwork {
 			}
 		}
 		return retour;
+	}
+
+	public void checkInput(Object input, inputsTypes inputType)
+			throws BadEntry {
+		int integerInput;
+		String stringInput;
+		String errorMessage = "Invalid " + inputType.toString().toLowerCase();
+
+		if (input == null)
+			throw new BadEntry(errorMessage);
+		
+		if (input instanceof String) {
+			stringInput = (String) input;
+			switch (inputType) {
+			case PSEUDO:
+				if (stringInput.matches("\\p{Space}+?"))
+					throw new BadEntry(errorMessage);
+			case TITRE:
+				if (stringInput.trim().length() < 1)
+					throw new BadEntry(errorMessage);
+				break;
+
+			case PASSWORD:
+				if (stringInput.trim().length() < 4)
+					throw new BadEntry(errorMessage);
+				break;
+
+			case GENRE:
+			case AUTEUR:
+			case PROFIL:
+			case REALISATEUR:
+			case SCENARISTE:
+			case COMMENTAIRE:
+				break;
+			default:
+				throw new BadEntry(errorMessage);
+			}
+		} else if (input instanceof Integer) {
+			integerInput = ((Integer) input).intValue();
+			switch (inputType) {
+			case DUREE:
+			case NBPAGES:
+				if (integerInput < 1)
+					throw new BadEntry(errorMessage);
+				break;
+
+			default:
+				throw new BadEntry(errorMessage);
+			}
+		} else if(input instanceof Float){
+			switch (inputType) {
+			case NOTE:
+				break;
+			default :
+				throw new BadEntry(errorMessage);
+			}
+			
+		} else {
+			throw new BadEntry(errorMessage);
+		}
 	}
 }
