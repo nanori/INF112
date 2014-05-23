@@ -122,14 +122,7 @@ public class SocialNetwork {
 		if (profil == null)
 			throw new BadEntry("Invalid profile");
 
-		int i = 0;
-		boolean memberIsFound = false;
-		while (!memberIsFound && i < nbMembers()) {
-			memberIsFound = members.get(i).exists(pseudo);
-			i++;
-		}
-
-		if (memberIsFound)
+		if (memberExists(pseudo) == null)
 			throw new MemberAlreadyExists();
 		
 		/*
