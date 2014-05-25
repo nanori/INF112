@@ -56,11 +56,8 @@ public abstract class Item {
 	 * @return Vrai si les deux titres correspondent. <br>
 	 *         Faux si non
 	 */
-	public boolean exists(String titre) {
-		if (this.titre.equalsIgnoreCase(titre.trim()))
-			return true;
-
-		return false;
+	public int exists(String titre) {
+		return titre.trim().compareToIgnoreCase(this.titre.trim());
 	}
 
 	/**

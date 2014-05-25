@@ -18,7 +18,7 @@ import exception.NotReview;
 public class SocialNetwork {
 
 	public enum itemsTypes {
-		BOOK, FILM
+		BOOK, FILM, ITEM
 	}
 
 	public enum inputsTypes {
@@ -214,7 +214,8 @@ public class SocialNetwork {
 		/*
 		 * Ajout du film
 		 */
-		items.add(new Film(titre, genre, realisateur, scenariste, duree));
+		items.add(getIndexOfItem(titre, itemsTypes.ITEM), new Film(titre, genre,
+			realisateur, scenariste, duree));
 
 	}
 
@@ -288,8 +289,8 @@ public class SocialNetwork {
 		/*
 		 * Ajout du livre
 		 */
-		items.add(new Book(titre, genre, auteur, nbPages));
-
+		items.add(getIndexOfItem(titre, itemsTypes.ITEM), new Book(titre, genre,
+			auteur, nbPages));
 	}
 
 	/**
@@ -531,10 +532,7 @@ public class SocialNetwork {
 	 * @return Book avec le titre correspondant ou null s'il n'est pas trouvé
 	 */
 	private Item getItem(String titre, itemsTypes itemType) throws BadEntry {
-		int i = 0;
 		Class classType = null;
-		Item item = null;
-		int nbItems = nbBooks() + nbFilms();
 		switch (itemType) {
 		case FILM:
 			classType = Film.class;
@@ -543,20 +541,16 @@ public class SocialNetwork {
 		case BOOK:
 			classType = Book.class;
 			break;
-
-		default:
-			throw new BadEntry("Error while marking member");
+			
+		case ITEM :
+			classType = Item.class;
+			break;
 		}
-
-		while (i < nbItems) {
-			if (items.get(i).getClass() == classType) {
-				if (items.get(i).exists(titre)) {
-					item = items.get(i);
-				}
-			}
-			i++;
-		}
-		return item;
+		int index = getIndexOfItem(titre, itemType);
+		if(items.size() != index && items.get(index).exists(titre) == 0 && items.get(index).getClass() == classType)
+			return items.get(index);
+		
+		return null;
 	}
 
 	/**
@@ -763,6 +757,40 @@ public class SocialNetwork {
 
 		} else {
 			throw new BadEntry(errorMessage);
+		}
+	}
+
+	private int getIndexOfItem(String titre, itemsTypes itemType) {
+		Class classType = null;
+		switch (itemType) {
+		case FILM:
+			classType = Film.class;
+			break;
+
+		case BOOK:
+			classType = Book.class;
+			break;
+		case ITEM:
+			classType = Item.class;
+			break;
+		}
+		return getIndex(titre, 0, items.size(), classType);
+	}
+
+	private int getIndex(String titre, int start, int end, Class classType) {
+		int milieu = (start + end) / 2;
+		if (end > start) {
+			if (items.get(milieu).exists(titre) == 0
+					&& items.get(milieu).getClass() == classType)
+				return milieu;
+
+			if (items.get(milieu).exists(titre) < 0) {
+				return getIndex(titre, start, milieu, classType);
+			} else {
+				return getIndex(titre, milieu + 1, end, classType);
+			}
+		} else {
+			return start;
 		}
 	}
 }
