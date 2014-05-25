@@ -692,7 +692,7 @@ public class SocialNetwork {
 				retour += items.get(i).toString();
 			}
 		}
-		return retour;
+		return retour + "\n\nLe SocialNetwork Contient : \n\tMemmbre -> " + nbMembers() + "\n\tLivres -> " + nbBooks() + "\n\tFilms -> " + nbFilms();
 	}
 
 	private void checkInput(Object input, inputsTypes inputType)

@@ -126,8 +126,9 @@ public class TestsRendementSocialNetwork {
 		System.out.println("Moyenne temps ajout membre: " + moyenne + " ms");
 		moyenne=addItems(sn, nbTest);
 		System.out.println("Moyenne temps ajout item: " + moyenne + " ms");
-		moyenne=addAvis(sn, nbTest);
-		System.out.println("Moyenne temps ajout avis: " + moyenne + " ms");
+		System.out.println(sn);
+		//moyenne=addAvis(sn, nbTest);
+		//System.out.println("Moyenne temps ajout avis: " + moyenne + " ms");
 
 	}
 	
