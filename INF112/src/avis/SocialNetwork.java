@@ -1,7 +1,6 @@
 package avis;
 
 import java.util.LinkedList;
-import java.util.logging.ErrorManager;
 
 import exception.BadEntry;
 import exception.ItemFilmAlreadyExists;
@@ -18,7 +17,7 @@ import exception.NotReview;
 public class SocialNetwork {
 
 	public enum itemsTypes {
-		BOOK, FILM, ITEM
+		BOOK, FILM
 	}
 
 	public enum inputsTypes {
@@ -34,7 +33,12 @@ public class SocialNetwork {
 	/**
 	 * Liste contenant l'ensemble des items du social network
 	 */
-	private LinkedList<Item> items;
+	private LinkedList<Book> books;
+
+	/**
+	 * Liste contenant l'ensemble des items du social network
+	 */
+	private LinkedList<Film> films;
 
 	/**
 	 * Constructeur SocialNetwork <br>
@@ -43,7 +47,8 @@ public class SocialNetwork {
 	 */
 	public SocialNetwork() {
 		members = new LinkedList<Member>();
-		items = new LinkedList<Item>();
+		books = new LinkedList<Book>();
+		films = new LinkedList<Film>();
 	}
 
 	/**
@@ -57,32 +62,14 @@ public class SocialNetwork {
 	 * @return Nombre de films du social network
 	 */
 	public int nbFilms() {
-		int i = 0;
-		int cptFilms = 0;
-
-		while (i < items.size()) {
-			if (items.get(i) instanceof Film) {
-				cptFilms++;
-			}
-			i++;
-		}
-		return cptFilms;
+		return films.size();
 	}
 
 	/**
 	 * @return Nombre de livres du social network
 	 */
 	public int nbBooks() {
-		int i = 0;
-		int cptBooks = 0;
-
-		while (i < items.size()) {
-			if (items.get(i) instanceof Book) {
-				cptBooks++;
-			}
-			i++;
-		}
-		return cptBooks;
+		return books.size();
 	}
 
 	/**
@@ -214,7 +201,7 @@ public class SocialNetwork {
 		/*
 		 * Ajout du film
 		 */
-		items.add(getIndexOfItem(titre, itemsTypes.ITEM), new Film(titre, genre,
+		films.add(getIndexFilm(titre, 0, nbFilms()), new Film(titre, genre,
 			realisateur, scenariste, duree));
 
 	}
@@ -289,8 +276,9 @@ public class SocialNetwork {
 		/*
 		 * Ajout du livre
 		 */
-		items.add(getIndexOfItem(titre, itemsTypes.ITEM), new Book(titre, genre,
+		books.add(getIndexBook(titre, 0, nbBooks()), new Book(titre, genre,
 			auteur, nbPages));
+
 	}
 
 	/**
@@ -532,25 +520,26 @@ public class SocialNetwork {
 	 * @return Book avec le titre correspondant ou null s'il n'est pas trouvé
 	 */
 	private Item getItem(String titre, itemsTypes itemType) throws BadEntry {
-		Class classType = null;
+		int index;
 		switch (itemType) {
 		case FILM:
-			classType = Film.class;
-			break;
+			index = getIndexFilm(titre, 0, nbFilms());
+			if (index == -1 || index == nbFilms() || films.get(index).exists(titre) != 0 )
+				return null;
+			
+			return films.get(index);
+			
 
 		case BOOK:
-			classType = Book.class;
-			break;
+			index = getIndexBook(titre, 0, nbBooks());
+			if (index == -1 || index == nbBooks() || books.get(index).exists(titre) != 0)
+				return null;
+			return books.get(index);
+
 			
-		case ITEM :
-			classType = Item.class;
-			break;
+		default:
+			throw new BadEntry("Error while getting Item");
 		}
-		int index = getIndexOfItem(titre, itemType);
-		if(items.size() != index && items.get(index).exists(titre) == 0 && items.get(index).getClass() == classType)
-			return items.get(index);
-		
-		return null;
 	}
 
 	/**
@@ -680,19 +669,17 @@ public class SocialNetwork {
 		for (int i = 0; i < nbMembers(); i++) {
 			retour += members.get(i).toString();
 		}
+		retour += "\n";
 		retour += "Les films : \n";
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) instanceof Film) {
-				retour += items.get(i).toString();
-			}
+		for (int i = 0; i < films.size(); i++) {
+			retour += films.get(i).toString();
 		}
+		retour += "\n";
 		retour += "Les livres : \n";
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i) instanceof Book) {
-				retour += items.get(i).toString();
-			}
+		for (int i = 0; i < books.size(); i++) {
+			retour += books.get(i).toString();
 		}
-		return retour + "\n\nLe SocialNetwork Contient : \n\tMemmbre -> " + nbMembers() + "\n\tLivres -> " + nbBooks() + "\n\tFilms -> " + nbFilms();
+		return retour;
 	}
 
 	private void checkInput(Object input, inputsTypes inputType)
@@ -760,37 +747,37 @@ public class SocialNetwork {
 		}
 	}
 
-	private int getIndexOfItem(String titre, itemsTypes itemType) {
-		Class classType = null;
-		switch (itemType) {
-		case FILM:
-			classType = Film.class;
-			break;
-
-		case BOOK:
-			classType = Book.class;
-			break;
-		case ITEM:
-			classType = Item.class;
-			break;
-		}
-		return getIndex(titre, 0, items.size(), classType);
-	}
-
-	private int getIndex(String titre, int start, int end, Class classType) {
+	private int getIndexFilm(String titre, int start, int end) {
 		int milieu = (start + end) / 2;
 		if (end > start) {
-			if (items.get(milieu).exists(titre) == 0
-					&& items.get(milieu).getClass() == classType)
+			if (films.get(milieu).exists(titre) == 0)
 				return milieu;
 
-			if (items.get(milieu).exists(titre) < 0) {
-				return getIndex(titre, start, milieu, classType);
+			if (films.get(milieu).exists(titre) < 0) {
+				return getIndexFilm(titre, start, milieu);
 			} else {
-				return getIndex(titre, milieu + 1, end, classType);
+				return getIndexFilm(titre, milieu + 1, end);
 			}
 		} else {
 			return start;
 		}
 	}
+
+	private int getIndexBook(String titre, int start, int end) {
+		int milieu = (start + end) / 2;
+		if (end > start) {
+			if (films.get(milieu).exists(titre) == 0)
+				return milieu;
+
+			if (films.get(milieu).exists(titre) < 0) {
+				return getIndexBook(titre, start, milieu);
+			} else {
+				return getIndexBook(titre, milieu + 1, end);
+			}
+		} else {
+			return start;
+		}
+	}
+
+
 }
