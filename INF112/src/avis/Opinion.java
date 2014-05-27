@@ -14,7 +14,7 @@ public class Opinion {
 	 * @see Opinion#updateOpinion(boolean)
 	 * @see Opinion#getOpinionMark()
 	 */
-	private boolean opinion;
+	private boolean opinionMark;
 
 	/**
 	 * Avis sur lequel l'Opinion est donnée
@@ -33,7 +33,7 @@ public class Opinion {
 	 *            Avis sur lequel l'Opinion est donnée
 	 */
 	public Opinion(boolean opinion, Avis avis) {
-		this.opinion = opinion;
+		this.opinionMark = opinion;
 		this.avis = avis;
 	}
 
@@ -44,7 +44,7 @@ public class Opinion {
 	 *            Nouvelle Opinion
 	 */
 	public void updateOpinion(boolean opinion) {
-		this.opinion = opinion;
+		this.opinionMark = opinion;
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class Opinion {
 	 * @return 1 si l'Opinion est positive -1 si l'Opinion est négative
 	 */
 	public int getOpinionMark() {
-		if (this.opinion)
+		if (this.opinionMark)
 			return 1;
 
 		return -1;

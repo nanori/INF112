@@ -33,6 +33,10 @@ public class Avis {
 	 */
 	private Member member;
 
+	/**
+	 * Pondération de la note en fonction du karma du membre qui l'a déposé
+	 * @see Avis#updatePonderation()
+	 */
 	private float ponderation;
 
 	/**
