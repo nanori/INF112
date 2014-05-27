@@ -1,0 +1,13 @@
+I - Compilation
+Dans le dossier principal de toutAvis :
+javac -encoding "ISO8859-1" ./src/*/*.java
+
+II - Execution
+Execution de l'IHM
+	java avis/IHM
+	
+Execution du test de SocialNetwork
+	java test/TestsSocialNetwork
+
+Execution du test de rendement
+	java test/TestsRendementSocialNetwork
