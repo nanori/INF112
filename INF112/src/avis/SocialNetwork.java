@@ -518,74 +518,6 @@ public class SocialNetwork {
 	}
 
 	/**
-	 * Authentifie un membre
-	 * 
-	 * @param pseudo
-	 *            Pseudo du membre qui dépose l'avis
-	 * 
-	 * @param password
-	 *            Password du membre qui dépose l'avis
-	 * 
-	 * @return Le membre désigné par le couple pseudo/password <br>
-	 *         Null si le pseudo ou le password sont invalides
-	 */
-	private Member authentication(String pseudo, String password) {
-		boolean memberIsFound = false;
-		int i = 0;
-
-		// Tant que le membre n'est pas trouvé et que la liste n'à pas été
-		// entierement parcourue
-		while (!memberIsFound && i < nbMembers()) {
-			memberIsFound = members.get(i).exists(pseudo, password);
-			if (memberIsFound)
-				return members.get(i);
-
-			i++;
-		}
-
-		return null;
-	}
-
-	/**
-	 * Retourne l'item du type correspondant à celui passé en paramettre
-	 * 
-	 * @param titre
-	 *            Titre à rechercher
-	 * @param itemType
-	 *            Type de l'item à retourner
-	 * @return Book avec le titre correspondant ou null s'il n'est pas trouvé
-	 * @throws BadEntry
-	 * 			Erreur si le type nest ni un livre ni un film
-	 */
-	private Item getItem(String titre, itemsTypes itemType) throws BadEntry {
-		int index;
-
-		/*
-		 * Choix selon le type d'item
-		 */
-		switch (itemType) {
-		case FILM:
-			index = getIndexFilm(titre, 0, nbFilms());
-			// Si l'item recherché n'a pas été trouvé, on retourne null
-			if (index == nbFilms() || films.get(index).exists(titre) != 0)
-				return null;
-
-			return films.get(index);
-
-		case BOOK:
-			index = getIndexBook(titre, 0, nbBooks());
-			// Si l'item recherché n'a pas été trouvé, on retourne null
-			if (index == nbBooks() || books.get(index).exists(titre) != 0)
-				return null;
-
-			return books.get(index);
-
-		default:
-			throw new BadEntry("Error while getting Item");
-		}
-	}
-
-	/**
 	 * Dépose une opinion sur l'avis laissé par un membre sur un item
 	 * 
 	 * @param pseudo
@@ -699,6 +631,74 @@ public class SocialNetwork {
 		return memberToMark.updateKarma();
 
 	}
+	
+	/**
+	 * Authentifie un membre
+	 * 
+	 * @param pseudo
+	 *            Pseudo du membre qui dépose l'avis
+	 * 
+	 * @param password
+	 *            Password du membre qui dépose l'avis
+	 * 
+	 * @return Le membre désigné par le couple pseudo/password <br>
+	 *         Null si le pseudo ou le password sont invalides
+	 */
+	private Member authentication(String pseudo, String password) {
+		boolean memberIsFound = false;
+		int i = 0;
+
+		// Tant que le membre n'est pas trouvé et que la liste n'à pas été
+		// entierement parcourue
+		while (!memberIsFound && i < nbMembers()) {
+			memberIsFound = members.get(i).exists(pseudo, password);
+			if (memberIsFound)
+				return members.get(i);
+
+			i++;
+		}
+
+		return null;
+	}
+
+	/**
+	 * Retourne l'item du type correspondant à celui passé en paramettre
+	 * 
+	 * @param titre
+	 *            Titre à rechercher
+	 * @param itemType
+	 *            Type de l'item à retourner
+	 * @return Book avec le titre correspondant ou null s'il n'est pas trouvé
+	 * @throws BadEntry
+	 * 			Erreur si le type nest ni un livre ni un film
+	 */
+	private Item getItem(String titre, itemsTypes itemType) throws BadEntry {
+		int index;
+
+		/*
+		 * Choix selon le type d'item
+		 */
+		switch (itemType) {
+		case FILM:
+			index = getIndexFilm(titre, 0, nbFilms());
+			// Si l'item recherché n'a pas été trouvé, on retourne null
+			if (index == nbFilms() || films.get(index).exists(titre) != 0)
+				return null;
+
+			return films.get(index);
+
+		case BOOK:
+			index = getIndexBook(titre, 0, nbBooks());
+			// Si l'item recherché n'a pas été trouvé, on retourne null
+			if (index == nbBooks() || books.get(index).exists(titre) != 0)
+				return null;
+
+			return books.get(index);
+
+		default:
+			throw new BadEntry("Error while getting Item");
+		}
+	}
 
 	/**
 	 * Renvoie le Membre associé au pseudo passé en parametre
@@ -720,26 +720,6 @@ public class SocialNetwork {
 		}
 
 		return null;
-	}
-
-	public String toString() {
-		String retour;
-
-		retour = "Social Network : \n" + "Les membres: \n";
-		for (int i = 0; i < nbMembers(); i++) {
-			retour += members.get(i).toString();
-		}
-		retour += "\n";
-		retour += "Les films : \n";
-		for (int i = 0; i < films.size(); i++) {
-			retour += films.get(i).toString();
-		}
-		retour += "\n";
-		retour += "Les livres : \n";
-		for (int i = 0; i < books.size(); i++) {
-			retour += books.get(i).toString();
-		}
-		return retour;
 	}
 
 	/**
@@ -930,4 +910,23 @@ public class SocialNetwork {
 		}
 	}
 
+	public String toString() {
+		String retour;
+
+		retour = "Social Network : \n" + "Les membres: \n";
+		for (int i = 0; i < nbMembers(); i++) {
+			retour += members.get(i).toString();
+		}
+		retour += "\n";
+		retour += "Les films : \n";
+		for (int i = 0; i < films.size(); i++) {
+			retour += films.get(i).toString();
+		}
+		retour += "\n";
+		retour += "Les livres : \n";
+		for (int i = 0; i < books.size(); i++) {
+			retour += books.get(i).toString();
+		}
+		return retour;
+	}
 }
