@@ -554,6 +554,8 @@ public class SocialNetwork {
 	 * @param itemType
 	 *            Type de l'item à retourner
 	 * @return Book avec le titre correspondant ou null s'il n'est pas trouvé
+	 * @throws BadEntry
+	 * 			Erreur si le type nest ni un livre ni un film
 	 */
 	private Item getItem(String titre, itemsTypes itemType) throws BadEntry {
 		int index;
@@ -749,6 +751,7 @@ public class SocialNetwork {
 	 * @param inputType
 	 *            Type d'entrée à traiter
 	 * @throws BadEntry
+	 * 			 Mauvaise entrée
 	 */
 	private void checkInput(Object input, inputsTypes inputType)
 			throws BadEntry {
