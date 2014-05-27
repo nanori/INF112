@@ -115,10 +115,6 @@ public class TestsAddItemFilm {
 	public static void main(String[] args) {
 
 		int nbFilms = 0;
-
-
-		System.out.println("Tests: ajouter des films au réseau social");
-
 		
 		SocialNetwork sn = new SocialNetwork();
 
@@ -174,12 +170,16 @@ public class TestsAddItemFilm {
 		
 		//Verification finale
 		if (nbFilms +2 != sn.nbFilms()) {
-			System.out.println("Erreur 5.1 :  le nombre de films aprés utilisation de addMember a été modifié");				
+			System.out.println("Erreur 5.1 :  le nombre de films aprés utilisation de addMember a été modifié");
+			cptErr++;
 		}
-
+		else{cptOk++;}
 		
-		System.out.println("\n***************************\n***************************\nTests d'ajout de films:\n\tTests OK: " + cptOk + "\n\tTests NOK: " + cptErr + "\n***************************\n***************************");
-		
+		System.out.println("***************************");
+		System.out.println("Tests d'ajout de films:");
+		System.out.println("\tTests OK: " + cptOk);
+		System.out.println("\tTests NOK: " + cptErr);
+		System.out.println("***************************");
 	}
 
 }

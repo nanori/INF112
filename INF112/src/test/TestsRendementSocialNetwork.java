@@ -120,14 +120,16 @@ public class TestsRendementSocialNetwork {
 		
 		SocialNetwork sn = new SocialNetwork();
 		
+		System.out.println("***************************");
 		System.out.println("Test de rendement du Social Network avec de " + nbTest + " membres, " + nbTest*10 + " items et " + nbTest*10 + " avis");
-		System.out.println("Cette opération peut prendre quelques minutes...");
+		System.out.println("Merci de patienter, test en cours...");
 		moyenne=addMembers(sn, nbTest);
 		System.out.println("Moyenne temps ajout membre: " + moyenne + " ms");
 		moyenne=addItems(sn, nbTest);
 		System.out.println("Moyenne temps ajout item: " + moyenne + " ms");
 		moyenne=addAvis(sn, nbTest);
 		System.out.println("Moyenne temps ajout avis: " + moyenne + " ms");
+		System.out.println("***************************");
 
 	}
 	

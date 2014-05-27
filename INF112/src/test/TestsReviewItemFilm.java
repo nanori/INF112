@@ -101,7 +101,6 @@ public class TestsReviewItemFilm {
 	public static void main(String[] args) {
 		// Mise en place de l'environement de test
 		SocialNetwork sn = new SocialNetwork();
-		System.out.println("Tests : noter des films");
 
 		try {
 			// Ajout de membres
@@ -206,11 +205,9 @@ public class TestsReviewItemFilm {
 						+ moy + ")");
 
 		System.out.println("***************************");
-		System.out.println("***************************");
 		System.out.println("Tests de notation de films:");
 		System.out.println("\tTests OK: " + cptOk);
 		System.out.println("\tTests NOK: " + cptErr);
-		System.out.println("***************************");
 		System.out.println("***************************");
 
 	}

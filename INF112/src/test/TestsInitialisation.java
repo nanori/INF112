@@ -1,28 +1,14 @@
 package test;
 
-import java.util.LinkedList;
-
 import avis.SocialNetwork;
-
-import exception.BadEntry;
-import exception.ItemFilmAlreadyExists;
-import exception.ItemBookAlreadyExists;
-import exception.MemberAlreadyExists;
-import exception.NotItem;
-import exception.NotMember;
 
 public class TestsInitialisation {
 
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		int nbMembres = 0;
-		int nbLivres = 0;
-		int nbFilms = 0;
 		
-		System.out.println("Tests  initialisation  réseau social  ");
-	
+		int cptOk=0;
+		int cptErr=0;
 		
 		try {
 
@@ -32,23 +18,33 @@ public class TestsInitialisation {
 				System.out.println("Erreur 1.1 :  le nombre de membres après création du réseau est non nul");
 				System.exit(1);
 			}
+			cptOk++;
 			if (sn.nbBooks() != 0) {
 				System.out.println("Erreur 1.2 : le nombre de livres après création du réseau est non nul");
 				System.exit(1);
 			}
+			cptOk++;
 			if (sn.nbFilms() != 0) {
 				System.out.println("Erreur 1.2 : le nombre de films après création du réseau est non nul");
 				System.exit(1);
 			}
+			cptOk++;
 
-			
+			System.out.println("***************************");
+			System.out.println("Tests affichage SocialNetwork vide :\n");
 			System.out.println(sn);
-			
+
 		}
 		catch (Exception e) {
 			System.out.println("Exception non prévue : " + e);
 			e.printStackTrace();
 		}
+		
+		System.out.println("***************************");
+		System.out.println("Tests initialisation réseau social  ");
+		System.out.println("\tTests OK: " + cptOk);
+		System.out.println("\tTests NOK: " + cptErr);
+		System.out.println("***************************");
 	}
 
 	

@@ -120,9 +120,6 @@ public class TestsAddItemBook {
 
 		int nbLivres = 0;
 		int nbFilms = 0;
-
-		System.out.println("Tests: ajouter des livres au réseau social");
-
 		
 		SocialNetwork sn = new SocialNetwork();
 
@@ -183,14 +180,20 @@ public class TestsAddItemBook {
 		
 		if (nbFilms != sn.nbFilms()) {
 			System.out.println("Erreur 5.1 :  le nombre de films après utilisation de addMember a été modifié");
+			cptErr++;
 		}
+		else{cptOk++;}
 		if (nbLivres +3 != sn.nbBooks()) {
-			System.out.println("Erreur 5.2 :  le nombre de livres après utilisation de addMember a été modifié");				
+			System.out.println("Erreur 5.2 :  le nombre de livres après utilisation de addMember a été modifié");
+			cptErr++;
 		}
+		else{cptOk++;}
 
-		
-		System.out.println("\n***************************\n***************************\nTests d'ajout de livres:\n\tTests OK: " + cptOk + "\n\tTests NOK: " + cptErr + "\n***************************\n***************************");
-		
+		System.out.println("***************************");
+		System.out.println("Tests d'ajout de livres:");
+		System.out.println("\tTests OK: " + cptOk);
+		System.out.println("\tTests NOK: " + cptErr);
+		System.out.println("***************************");
 	}
 
 }

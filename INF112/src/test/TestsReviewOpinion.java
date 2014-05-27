@@ -1,7 +1,6 @@
 package test;
 
 import java.util.Random;
-import java.util.concurrent.ExecutionException;
 
 import exception.BadEntry;
 import exception.ItemBookAlreadyExists;
@@ -21,9 +20,9 @@ public class TestsReviewOpinion {
 		try {
 			r = sn.reviewOpinion(pseudo, password, memberToReview, titre, itemType, opinion);
 			System.err.println("Test " + idTest + " : " + messErreur);
-			cptOk++;
+			cptErr++;
 		} catch (NotReview e){
-			
+			cptOk++;
 		} catch (Exception e) {
 			System.err.println("Test " + idTest + " : exception non prévue. " + e);
 			e.printStackTrace();
@@ -37,9 +36,9 @@ public class TestsReviewOpinion {
 		try {
 			r = sn.reviewOpinion(pseudo, password, memberToReview, titre, itemType, opinion);
 			System.err.println("Test " + idTest + " : " + messErreur);
-			cptOk++;
+			cptErr++;
 		} catch (NotItem e){
-			
+			cptOk++;
 		} catch (Exception e) {
 			System.err.println("Test " + idTest + " : exception non prévue. " + e);
 			e.printStackTrace();
@@ -53,9 +52,9 @@ public class TestsReviewOpinion {
 		try {
 			r = sn.reviewOpinion(pseudo, password, memberToReview, titre, itemType, opinion);
 			System.err.println("Test " + idTest + " : " + messErreur);
-			cptOk++;
+			cptErr++;
 		} catch (NotMember e){
-			
+			cptOk++;
 		} catch (Exception e) {
 			System.err.println("Test " + idTest + " : exception non prévue. " + e);
 			e.printStackTrace();
@@ -69,9 +68,9 @@ public class TestsReviewOpinion {
 		try {
 			r = sn.reviewOpinion(pseudo, password, memberToReview, titre, itemType, opinion);
 			System.err.println("Test " + idTest + " : " + messErreur);
-			cptOk++;
+			cptErr++;
 		} catch (BadEntry be){
-			
+			cptOk++;
 		} catch (Exception e) {
 			System.err.println("Test " + idTest + " : exception non prévue. " + e);
 			e.printStackTrace();
@@ -98,7 +97,6 @@ public class TestsReviewOpinion {
 		 * Mise en place de l'environnement de test
 		 */
 		SocialNetwork sn = new SocialNetwork();
-		System.out.println("Tests : noter des livres");
 		float karma;
 
 		try {
@@ -153,6 +151,15 @@ public class TestsReviewOpinion {
 		/*
 		 * Test 5 : Déroulement normal
 		 */
+		
+		System.out.println("***************************");
+		System.out.println("Tests de notation d'avis:");
+		System.out.println("\tTests OK: " + cptOk);
+		System.out.println("\tTests NOK: " + cptErr);
+		System.out.println("***************************");
+		
+		System.out.println("Tests de Karma:");
+		
 		try {
 			System.out.println(sn.consultItems("Le Cidre"));
 			karma = reviewOpinionOK(sn, "geubeutreu", "123456", "Jean", "Le Cidre", itemsTypes.BOOK, false, "5.1", "Not good");
@@ -166,6 +173,7 @@ public class TestsReviewOpinion {
 		} catch (BadEntry e1) {
 			e1.printStackTrace();
 		}
+		System.out.println("***************************");
 	}
 
 	private static void generateMembers(SocialNetwork sn, int nbMembres) throws BadEntry, MemberAlreadyExists {

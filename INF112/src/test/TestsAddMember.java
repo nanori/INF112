@@ -1,15 +1,8 @@
 package test;
 
-import java.util.LinkedList;
-
 import avis.SocialNetwork;
-
 import exception.BadEntry;
-import exception.ItemFilmAlreadyExists;
-import exception.ItemBookAlreadyExists;
 import exception.MemberAlreadyExists;
-import exception.NotItem;
-import exception.NotMember;
 
 /** 
  * @author B. Prou, E. Cousin
@@ -19,7 +12,8 @@ import exception.NotMember;
 
 public class TestsAddMember {
 
-	
+	public static int cptErr;
+	public static int cptOk;
 
 	public static void addMemberBadEntryTest (SocialNetwork sn, String pseudo, String pwd, String profil, String idTest, String messErreur){
 		// verifie que l'ajout d'un membre (pseudo, pwd, profil) est refusee (levée de l'exception BadEntry et  pas de modification du sn)
@@ -29,21 +23,33 @@ public class TestsAddMember {
 		try {
 			sn.addMember (pseudo, pwd, profil);
 			System.out.println ("Test " + idTest + " : " + messErreur);
+			cptErr++;
 		}
 		catch (BadEntry e) {
-			if (sn.nbMembers() != nbMembres) System.out.println("Test " + idTest + " : l'exception BadEntry a bien été levée mais le nombre de membres a été modifié");
-			// else : OK
+			if (sn.nbMembers() != nbMembres) {
+				System.out.println("Test " + idTest + " : l'exception BadEntry a bien été levée mais le nombre de membres a été modifié");
+				cptErr++;
+			}
+			cptOk++;
 		}
-		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non prévue. " + e); e.printStackTrace();}
+		catch (Exception e) {
+			cptErr++;
+			System.out.println ("Test " + idTest + " : exception non prévue. " + e); e.printStackTrace();}
 	}
 
 	public static void addMemberOKTest (SocialNetwork sn, String pseudo, String pwd, String profil, String idTest){
 		int nbMembres = sn.nbMembers();
 		try{
 			sn.addMember (pseudo, pwd, profil);
-			if (sn.nbMembers() != nbMembres+1) System.out.println("Test " + idTest + " :  le nombre de membres n'a pas été correctement incrémenté");
+			if (sn.nbMembers() != nbMembres+1) {
+				System.out.println("Test " + idTest + " :  le nombre de membres n'a pas été correctement incrémenté");
+				cptErr++;
+			}
+			cptOk++;
 		}
-		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non prévue. " + e); e.printStackTrace();}
+		catch (Exception e) {
+			cptErr++;
+			System.out.println ("Test " + idTest + " : exception non prévue. " + e); e.printStackTrace();}
 	}
 
 	public static void addMemberAlreadyExistsTest (SocialNetwork sn, String pseudo, String pwd, String profil, String idTest, String messErreur){
@@ -51,25 +57,27 @@ public class TestsAddMember {
 		try {
 			sn.addMember (pseudo, pwd, profil);
 			System.out.println ("Test " + idTest + " : " + messErreur);
+			cptErr++;
 		}
 		catch (MemberAlreadyExists e) {
-			if (sn.nbMembers() != nbMembres) System.out.println("Test " + idTest + " : l'exception MemberAlreadyExists a bien été levée mais le nombre de membres a été modifié");
-			// else : OK
+			if (sn.nbMembers() != nbMembres) {
+				cptErr++;
+				System.out.println("Test " + idTest + " : l'exception MemberAlreadyExists a bien été levée mais le nombre de membres a été modifié");
+			}
+			cptOk++;
 		}
-		catch (Exception e) {System.out.println ("Test " + idTest + " : exception non prévue. " + e); e.printStackTrace();}
+		catch (Exception e) {
+			cptErr++;
+			System.out.println ("Test " + idTest + " : exception non prévue. " + e); e.printStackTrace();}
 	}
 
 
 
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-		int nbMembres = 0;
 		int nbLivres = 0;
 		int nbFilms = 0;
-
-		System.out.println("Tests  ajouter des membres au réseau social  ");
 
 
 		SocialNetwork sn = new SocialNetwork();
@@ -108,13 +116,20 @@ public class TestsAddMember {
 
 		if (nbFilms != sn.nbFilms()) {
 			System.out.println("Erreur 3.11 :  le nombre de films après utilisation de addMember a été modifié");
+			cptErr++;
 		}
+		else{cptOk++;}
 		if (nbLivres != sn.nbBooks()) {
-			System.out.println("Erreur 3.12 :  le nombre de livres après utilisation de addMember a été modifié");				
-		}
+			System.out.println("Erreur 3.12 :  le nombre de livres après utilisation de addMember a été modifié");
+			cptErr++;
+		}else{cptOk++;}
 
-		// ce n'est pas du test, mais cela peut "rassurer"...
-		System.out.println(sn);
+		System.out.println("***************************");
+		System.out.println("Tests d'ajout de membres:");
+		System.out.println("\tTests OK: " + cptOk);
+		System.out.println("\tTests NOK: " + cptErr);
+		System.out.println("***************************");
+
 
 	}
 }
