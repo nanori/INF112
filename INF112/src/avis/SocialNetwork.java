@@ -114,6 +114,10 @@ public class SocialNetwork {
 		checkInput(pseudo, inputsTypes.PSEUDO);
 		checkInput(password, inputsTypes.PASSWORD);
 		checkInput(profil, inputsTypes.PROFIL);
+
+		/*
+		 * Tests de l'existence d'un membre avec ce pseudo
+		 */
 		if (memberExists(pseudo) != null)
 			throw new MemberAlreadyExists();
 
@@ -192,9 +196,15 @@ public class SocialNetwork {
 		checkInput(scenariste, inputsTypes.SCENARISTE);
 		checkInput(duree, inputsTypes.DUREE);
 
+		/*
+		 * Authentification du membre
+		 */
 		if (authentication(pseudo, password) == null)
 			throw new NotMember("Member does not exist");
 
+		/*
+		 * Test de l'existence d'un film du même titre
+		 */
 		if (getItem(titre, itemsTypes.FILM) != null)
 			throw new ItemFilmAlreadyExists();
 
@@ -267,9 +277,15 @@ public class SocialNetwork {
 		checkInput(auteur, inputsTypes.AUTEUR);
 		checkInput(nbPages, inputsTypes.NBPAGES);
 
+		/*
+		 * Authentification du membre
+		 */
 		if (authentication(pseudo, password) == null)
 			throw new NotMember("Member does not exist");
 
+		/*
+		 * Test de l'existence d'un livre du même nom
+		 */
 		if (getItem(titre, itemsTypes.BOOK) != null)
 			throw new ItemBookAlreadyExists();
 
@@ -306,9 +322,13 @@ public class SocialNetwork {
 		 * Recherche des Items
 		 */
 		LinkedList<String> returnList = new LinkedList<String>();
+		// Dans le social network, il n'y a qu'un seul livre qui peut être
+		// retourné
 		if (getItem(nom, itemsTypes.BOOK) != null)
 			returnList.add(getItem(nom, itemsTypes.BOOK).toString());
 
+		// Dans le social network, il n'y a qu'un seul film qui peut être
+		// retourné
 		if (getItem(nom, itemsTypes.FILM) != null)
 			returnList.add(getItem(nom, itemsTypes.FILM).toString());
 
@@ -363,7 +383,7 @@ public class SocialNetwork {
 		 * Variables
 		 */
 		Member member;
-		Film f;
+		Film film;
 		Avis avis;
 
 		/*
@@ -375,29 +395,36 @@ public class SocialNetwork {
 		checkInput(note, inputsTypes.NOTE);
 		checkInput(commentaire, inputsTypes.COMMENTAIRE);
 
+		/*
+		 * Authentification du membre
+		 */
 		member = authentication(pseudo, password);
 		if (member == null)
 			throw new NotMember("Member does not exist");
 
-		f = (Film) getItem(titre, itemsTypes.FILM);
-		if (f == null)
+		/*
+		 * Récupération du film
+		 */
+		film = (Film) getItem(titre, itemsTypes.FILM);
+		if (film == null)
 			throw new NotItem("Film does not exist");
 
 		/*
 		 * Ajout de l'avis
 		 */
-		avis = member.getReview(f);
+		avis = member.getReview(film);
 		if (avis == null) {
-			// Si le membre n'a pas déjà noté cet item
-			avis = new Avis(note, commentaire, f, member);
+			// Si le membre n'a pas déjà noté cet item, on crée un avis qui est
+			// ajouté au membre et a l'item
+			avis = new Avis(note, commentaire, film, member);
 			member.addReviewToCollection(avis);
-			f.addReviewToCollection(avis);
+			film.addReviewToCollection(avis);
 		} else {
-			// Si le membre a déjà noté l'item
+			// Si le membre a déjà noté l'item, on met à jour ça note.
 			avis.update(note, commentaire);
 		}
 
-		return f.getMoyenne();
+		return film.getMoyenne();
 	}
 
 	/**
@@ -446,7 +473,7 @@ public class SocialNetwork {
 		 * Variables
 		 */
 		Member member;
-		Book b;
+		Book book;
 		Avis avis;
 
 		/*
@@ -458,28 +485,36 @@ public class SocialNetwork {
 		checkInput(note, inputsTypes.NOTE);
 		checkInput(commentaire, inputsTypes.COMMENTAIRE);
 
+		/*
+		 * Authentification du membre
+		 */
 		member = authentication(pseudo, password);
 		if (member == null)
 			throw new NotMember("Member does not exist");
-		b = (Book) getItem(titre, itemsTypes.BOOK);
-		if (b == null)
+
+		/*
+		 * Récupération du film
+		 */
+		book = (Book) getItem(titre, itemsTypes.BOOK);
+		if (book == null)
 			throw new NotItem("Book does not exist");
 
 		/*
 		 * Ajout de l'avis
 		 */
-		avis = member.getReview(b);
+		avis = member.getReview(book);
 		if (avis == null) {
-			// Si le membre n'a pas déjà noté cet item
-			avis = new Avis(note, commentaire, b, member);
+			// Si le membre n'a pas déjà noté cet item, on crée un avis qui est
+			// ajouté au membre et a l'item
+			avis = new Avis(note, commentaire, book, member);
 			member.addReviewToCollection(avis);
-			b.addReviewToCollection(avis);
+			book.addReviewToCollection(avis);
 		} else {
-			// Si le membre a déjà noté cet item
+			// Si le membre a déjà noté cet item, on met à jour la note
 			avis.update(note, commentaire);
 		}
 
-		return b.getMoyenne();
+		return book.getMoyenne();
 	}
 
 	/**
@@ -496,18 +531,19 @@ public class SocialNetwork {
 	 */
 	private Member authentication(String pseudo, String password) {
 		boolean memberIsFound = false;
-		Member m = null;
 		int i = 0;
 
+		// Tant que le membre n'est pas trouvé et que la liste n'à pas été
+		// entierement parcourue
 		while (!memberIsFound && i < nbMembers()) {
 			memberIsFound = members.get(i).exists(pseudo, password);
 			if (memberIsFound)
-				m = members.get(i);
+				return members.get(i);
 
 			i++;
 		}
 
-		return m;
+		return null;
 	}
 
 	/**
@@ -521,22 +557,27 @@ public class SocialNetwork {
 	 */
 	private Item getItem(String titre, itemsTypes itemType) throws BadEntry {
 		int index;
+
+		/*
+		 * Choix selon le type d'item
+		 */
 		switch (itemType) {
 		case FILM:
 			index = getIndexFilm(titre, 0, nbFilms());
-			if (index == -1 || index == nbFilms() || films.get(index).exists(titre) != 0 )
+			// Si l'item recherché n'a pas été trouvé, on retourne null
+			if (index == nbFilms() || films.get(index).exists(titre) != 0)
 				return null;
-			
+
 			return films.get(index);
-			
 
 		case BOOK:
 			index = getIndexBook(titre, 0, nbBooks());
-			if (index == -1 || index == nbBooks() || books.get(index).exists(titre) != 0)
+			// Si l'item recherché n'a pas été trouvé, on retourne null
+			if (index == nbBooks() || books.get(index).exists(titre) != 0)
 				return null;
+
 			return books.get(index);
 
-			
 		default:
 			throw new BadEntry("Error while getting Item");
 		}
@@ -555,7 +596,7 @@ public class SocialNetwork {
 	 *            Titre de l'item sur lequel l'avis à noter à été laissé
 	 * @param itemType
 	 *            Type de l'item concerné par l'avis
-	 * @param opinion
+	 * @param opinionMark
 	 *            Opinion à laisser par le membre sur l'avis
 	 * 
 	 * @return Le nouveau karma du membre
@@ -588,14 +629,14 @@ public class SocialNetwork {
 	 */
 	public float reviewOpinion(String pseudo, String password,
 								String pseudoMemberToReview, String titre,
-								itemsTypes itemType, boolean opinion)
+								itemsTypes itemType, boolean opinionMark)
 			throws NotItem, BadEntry, NotMember, NotReview {
 		/*
 		 * Variables
 		 */
 		Member member, memberToMark;
-		Item i;
-		Opinion o;
+		Item item;
+		Opinion opinion;
 		Avis avis;
 
 		/*
@@ -606,34 +647,48 @@ public class SocialNetwork {
 		checkInput(titre, inputsTypes.TITRE);
 		checkInput(pseudoMemberToReview, inputsTypes.PSEUDO);
 
+		/*
+		 * Authentification et récupération du membre
+		 */
 		member = authentication(pseudo, password);
 		if (member == null)
 			throw new NotMember("Member " + pseudo
 					+ " does not exist or the password is wrong");
 
+		/*
+		 * Vérification de l'existance du membre à noter
+		 */
 		memberToMark = memberExists(pseudoMemberToReview);
 		if (memberToMark == null)
 			throw new NotMember("Member " + pseudoMemberToReview
 					+ " does not exist");
 
-		i = getItem(titre, itemType);
+		/*
+		 * Récupération de l'item
+		 */
+		item = getItem(titre, itemType);
+		if (item == null)
+			throw new NotItem("Item " + titre + " does not exist");
 
-		if (i == null)
-			throw new NotItem("Book " + titre + " does not exist");
-
-		avis = memberToMark.getReview(i);
+		/*
+		 * Récupération de l'avis
+		 */
+		avis = memberToMark.getReview(item);
 		if (avis == null)
 			throw new NotReview();
 
 		/*
 		 * Ajout de l'opinion
 		 */
-		o = memberToMark.getOpinion(avis);
-		if (o == null) {
-			o = new Opinion(opinion, avis);
-			memberToMark.addOpinion(o);
+		opinion = memberToMark.getOpinion(avis);
+		if (opinion == null) {
+			// Si l'opinion n'existe pas, on la crée et on l'ajoute au membre
+			// noté.
+			opinion = new Opinion(opinionMark, avis);
+			memberToMark.addOpinion(opinion);
 		} else {
-			o.updateOpinion(opinion);
+			// Si l'opinion existe, on la met à jour
+			opinion.updateOpinion(opinionMark);
 		}
 
 		/*
@@ -653,6 +708,9 @@ public class SocialNetwork {
 	 */
 	private Member memberExists(String pseudo) {
 		int i = 0;
+
+		// Tant que le membre n'est pas trouvé et que la liste n'à pas été
+		// entierement parcourue
 		while (i < nbMembers()) {
 			if (members.get(i).exists(pseudo))
 				return members.get(i);
@@ -682,28 +740,56 @@ public class SocialNetwork {
 		return retour;
 	}
 
+	/**
+	 * Vérifie si l'entrée correspond aux critères. Dans le cas contraire,
+	 * l'exception BadEntry est levée
+	 * 
+	 * @param input
+	 *            Objet à analyser (de type int, float ou String)
+	 * @param inputType
+	 *            Type d'entrée à traiter
+	 * @throws BadEntry
+	 */
 	private void checkInput(Object input, inputsTypes inputType)
 			throws BadEntry {
+		/*
+		 * Variables
+		 */
+		// Utilisé si l'objet input est un Integer
 		int integerInput;
+		// Utilisé si l'objet input est un Float
 		float floatInput;
+		// Utilisé si l'objet input est un String
 		String stringInput;
+		// Message d'erreur à mettre dans l'exception
 		String errorMessage = "Invalid " + inputType.toString().toLowerCase();
 
+		/*
+		 * Test de la instanciation de l'objet input
+		 */
 		if (input == null)
 			throw new BadEntry(errorMessage);
 
+		/*
+		 * Tests si input est un String (cas le plus fréquent)
+		 */
 		if (input instanceof String) {
 			stringInput = (String) input;
 			switch (inputType) {
 			case PSEUDO:
+				// Si le String est composé uniquement d'espaces
 				if (stringInput.matches("\\p{Space}+?"))
 					throw new BadEntry(errorMessage);
 			case TITRE:
+				// Si le String fait moins de 1 caractère (Hors espace au début
+				// et à la fin)
 				if (stringInput.trim().length() < 1)
 					throw new BadEntry(errorMessage);
 				break;
 
 			case PASSWORD:
+				// Si le String fait moins de 4 caractère (Hors espace au début
+				// et à la fin)
 				if (stringInput.trim().length() < 4)
 					throw new BadEntry(errorMessage);
 				break;
@@ -718,11 +804,17 @@ public class SocialNetwork {
 			default:
 				throw new BadEntry(errorMessage);
 			}
-		} else if (input instanceof Integer) {
+		}
+
+		/*
+		 * Tests si input est un Integer
+		 */
+		else if (input instanceof Integer) {
 			integerInput = ((Integer) input).intValue();
 			switch (inputType) {
 			case DUREE:
 			case NBPAGES:
+				// Si l'Integer est inferieur à 1
 				if (integerInput < 1)
 					throw new BadEntry(errorMessage);
 				break;
@@ -730,10 +822,16 @@ public class SocialNetwork {
 			default:
 				throw new BadEntry(errorMessage);
 			}
-		} else if (input instanceof Float) {
+		}
+
+		/*
+		 * Tests si input est un Float
+		 */
+		else if (input instanceof Float) {
 			floatInput = ((Float) input).floatValue();
 			switch (inputType) {
 			case NOTE:
+				// Si le Float n'est pas compris dans l'intervale [0;5]
 				if (floatInput < 0 || floatInput > 5)
 					throw new BadEntry(errorMessage);
 
@@ -742,42 +840,91 @@ public class SocialNetwork {
 				throw new BadEntry(errorMessage);
 			}
 
-		} else {
+		}
+
+		/*
+		 * Si l'objet n'est pas un Integer, Float ou String
+		 */
+		else {
 			throw new BadEntry(errorMessage);
 		}
 	}
 
+	/**
+	 * Obtient l'index d'un film dont le titre est passé en parametre. Dans le
+	 * cas ou le film n'existe pas, c'est l'index ou doit etre posisionné ce
+	 * film qui est renvoyé.
+	 * 
+	 * @param titre
+	 *            Titre à rechercher
+	 * @param start
+	 *            Index de début de la recherche
+	 * @param end
+	 *            Index de fin de la recherche
+	 * @return Index du film recherché ou index où le positionner
+	 */
 	private int getIndexFilm(String titre, int start, int end) {
-		int milieu = (start + end) / 2;
+		int middle = (start + end) / 2;
+		// Si la zone de recherche est superieure à une case, on poursuit la
+		// recherche
 		if (end > start) {
-			if (films.get(milieu).exists(titre) == 0)
-				return milieu;
+			// Si la case annalysée correspond au film recherché, on retourne
+			// l'index de celui ci
+			if (films.get(middle).exists(titre) == 0)
+				return middle;
 
-			if (films.get(milieu).exists(titre) < 0) {
-				return getIndexFilm(titre, start, milieu);
+			// Si non on recherche
+			if (films.get(middle).exists(titre) < 0) {
+				// Dans la partie gauche
+				return getIndexFilm(titre, start, middle);
 			} else {
-				return getIndexFilm(titre, milieu + 1, end);
+				// Dans la partie droite
+				return getIndexFilm(titre, middle + 1, end);
 			}
-		} else {
+		}
+		// Si non, on retourne null
+		else {
 			return start;
 		}
 	}
 
+	/**
+	 * Obtient l'index d'un livre dont le titre est passé en parametre. Dans le
+	 * cas ou le livre n'existe pas, c'est l'index ou doit etre posisionné ce
+	 * livre qui est renvoyé.
+	 * 
+	 * @param titre
+	 *            Titre à rechercher
+	 * @param start
+	 *            Index de début de la recherche
+	 * @param end
+	 *            Index de fin de la recherche
+	 * @return Index du livre recherché ou index où le positionner
+	 */
 	private int getIndexBook(String titre, int start, int end) {
-		int milieu = (start + end) / 2;
-		if (end > start) {
-			if (films.get(milieu).exists(titre) == 0)
-				return milieu;
+		int middle = (start + end) / 2;
 
-			if (films.get(milieu).exists(titre) < 0) {
-				return getIndexBook(titre, start, milieu);
+		// Si la zone de recherche est superieure à une case, on poursuit la
+		// recherche
+		if (end > start) {
+			// Si la case annalysée correspond au film recherché, on retourne
+			// l'index de celui ci
+			if (books.get(middle).exists(titre) == 0)
+				return middle;
+
+			// Si non on recherche
+			if (books.get(middle).exists(titre) < 0) {
+				// Dans la partie gauche
+				return getIndexBook(titre, start, middle);
 			} else {
-				return getIndexBook(titre, milieu + 1, end);
+				// Dans la partie droite
+				return getIndexBook(titre, middle + 1, end);
 			}
-		} else {
+		} 
+		// Si non, on retourne null
+		else {
 			return start;
 		}
 	}
-
 
 }
