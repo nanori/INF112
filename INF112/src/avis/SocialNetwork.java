@@ -1,5 +1,6 @@
 package avis;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import exception.BadEntry;
@@ -28,17 +29,17 @@ public class SocialNetwork {
 	/**
 	 * Liste contenant l'ensembe des membres du social network
 	 */
-	private LinkedList<Member> members;
+	private ArrayList<Member> members;
 
 	/**
 	 * Liste contenant l'ensemble des items du social network
 	 */
-	private LinkedList<Book> books;
+	private ArrayList<Book> books;
 
 	/**
 	 * Liste contenant l'ensemble des items du social network
 	 */
-	private LinkedList<Film> films;
+	private ArrayList<Film> films;
 
 	/**
 	 * Constructeur SocialNetwork <br>
@@ -46,9 +47,9 @@ public class SocialNetwork {
 	 * sont instanciées avec des listes vides.
 	 */
 	public SocialNetwork() {
-		members = new LinkedList<Member>();
-		books = new LinkedList<Book>();
-		films = new LinkedList<Film>();
+		members = new ArrayList<Member>();
+		books = new ArrayList<Book>();
+		films = new ArrayList<Film>();
 	}
 
 	/**
@@ -125,7 +126,7 @@ public class SocialNetwork {
 		 * Ajout du nouveau membre
 		 */
 		Member membre = new Member(pseudo, password, profil);
-		members.addLast(membre);
+		members.add(getIndexMember(pseudo, 0, nbMembers()), membre);
 	}
 
 	/**
@@ -645,20 +646,15 @@ public class SocialNetwork {
 	 *         Null si le pseudo ou le password sont invalides
 	 */
 	private Member authentication(String pseudo, String password) {
-		boolean memberIsFound = false;
-		int i = 0;
+		int index = 0;
 
-		// Tant que le membre n'est pas trouvé et que la liste n'à pas été
-		// entierement parcourue
-		while (!memberIsFound && i < nbMembers()) {
-			memberIsFound = members.get(i).exists(pseudo, password);
-			if (memberIsFound)
-				return members.get(i);
+		index = getIndexMember(pseudo, 0, nbMembers());
+		// Si l'item recherché n'a pas été trouvé, on retourne null
+		if (index == nbMembers() || !members.get(index).exists(pseudo, password))
+			return null;
 
-			i++;
-		}
+		return members.get(index);
 
-		return null;
 	}
 
 	/**
@@ -709,17 +705,14 @@ public class SocialNetwork {
 	 *         n'existe pas
 	 */
 	private Member memberExists(String pseudo) {
-		int i = 0;
+		int index = 0;
 
-		// Tant que le membre n'est pas trouvé et que la liste n'à pas été
-		// entierement parcourue
-		while (i < nbMembers()) {
-			if (members.get(i).exists(pseudo))
-				return members.get(i);
-			i++;
-		}
+		index = getIndexMember(pseudo, 0, nbMembers());
+		// Si l'item recherché n'a pas été trouvé, on retourne null
+		if (index == nbMembers() || members.get(index).exists(pseudo) != 0)
+			return null;
 
-		return null;
+		return members.get(index);
 	}
 
 	/**
@@ -902,6 +895,32 @@ public class SocialNetwork {
 			} else {
 				// Dans la partie droite
 				return getIndexBook(titre, middle + 1, end);
+			}
+		} 
+		// Si non, on retourne null
+		else {
+			return start;
+		}
+	}
+	
+	private int getIndexMember(String pseudo, int start, int end) {
+		int middle = (start + end) / 2;
+
+		// Si la zone de recherche est superieure à une case, on poursuit la
+		// recherche
+		if (end > start) {
+			// Si la case annalysée correspond au film recherché, on retourne
+			// l'index de celui ci
+			if (members.get(middle).exists(pseudo) == 0)
+				return middle;
+
+			// Si non on recherche
+			if (members.get(middle).exists(pseudo) < 0) {
+				// Dans la partie gauche
+				return getIndexMember(pseudo, start, middle);
+			} else {
+				// Dans la partie droite
+				return getIndexMember(pseudo, middle + 1, end);
 			}
 		} 
 		// Si non, on retourne null

@@ -97,8 +97,8 @@ public class Member {
 	 * @return Vrai si le pseudo correspond au membre. <br>
 	 *         Faux si non
 	 */
-	public boolean exists(String pseudo) {
-		return this.pseudo.equalsIgnoreCase(pseudo.trim());
+	public int exists(String pseudo) {
+		return pseudo.trim().compareToIgnoreCase(this.pseudo.trim());
 	}
 
 	/**

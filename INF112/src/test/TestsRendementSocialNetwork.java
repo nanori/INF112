@@ -116,7 +116,7 @@ public class TestsRendementSocialNetwork {
 	
 	public static void main(String [] arg){
 		float moyenne;
-		int nbTest = 500;
+		int nbTest = 100000;
 		
 		SocialNetwork sn = new SocialNetwork();
 		
