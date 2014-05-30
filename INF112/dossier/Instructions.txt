@@ -1,0 +1,25 @@
+LE CODE :
+
+Déposer sur Moodle une archive au format tar.gz ou .zip contenant les éléments suivants :
+	– le diagramme de classe du produit correspondant à la version livrée
+	– les diagrammes de séquence associé à la méthode rewiewOpinionmontrant exhaustivement les différents scenarios, succès et échecs, correspondant à la version livrée du produit  ;
+	– les sources du projet incluant la classe de test qui aura servi à valider le produit  par les concepteurs ;
+	– un fichier « readme » qui donnera toute information utile pour compiler le produit, générer la Javadoc et exécuter directement la classe de test (i.e. en ligne de commande javadoc, javac, java).
+	
+LE DOSSIER :
+Ce document, au format PDF, doit respecter dans sa forme les règles décrites dans le guide de rédaction de rapport édité par l'école [voir référence sur le cours Moodle].
+
+Il contiendra les sections suivantes :
+	1. Page de couverture.
+	2. Table des matières.
+	3. Introduction.
+	4. Fiche tâches/temps avec les résultats demandés.
+	5. Diagramme de classes correspondant à l'application livrée et diagrammes de séquence demandés en cohérence avec le code livré.
+	6. Rapport d'audit du code comprenant la fiche de relecture du code (cf TP5) explicitant les décisions de correction prises par les concepteurs.
+	7. Rapport de recette comprenant la fiche de validation remplie par le client et la synthèse rédigée par le prestataire (cf TP6). Cette synthèse exposera les principaux problèmes mis en évidence par la recette et décrira les correctifs qui ont été envisagés et appliqués. Si la recette  a  levé  des  problèmes  qui  n'avaient  pas  été  détectés  par  la  validation  des développeurs, on en analysera les raisons.
+	8. Un bilan précis de l'état dans lequel se trouve le produit livré avec la liste des améliorations	qui auront effectivement été apportées au code depuis la relecture croisée, ainsi que les corrections  effectivement  apportées  suite  à  la  recette.  Suivra  un  bilan  fonctionnel  du	produit livré : la liste des fonctions qui marchent à 100% selon la procédure de validation adoptée, ce qui éventuellement ne fonctionne pas complétement. Enfin, un bilan nonfonctionnel portant sur le rendement du produit livré sera présenté.
+	9. Bilan général
+		Dans cette partie on établira un bilan critique du travail réalisé, tant du point de vue méthodologique et organisationnel que du point de vue de la qualité du produit livré. On répondra notamment aux questions suivantes en 2 à 3 lignes par item  :
+		• Quels sont les points faibles et les points forts de notre livrable ?
+		• Si c'était à refaire, que changerions-nous, le cas échéant, dans notre démarche de conception-réalisation ?
+		• Quels sont les avantages et inconvénients trouvés dans la démarche de conception en W ?
