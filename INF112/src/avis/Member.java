@@ -30,12 +30,12 @@ public class Member {
 	private String profil;
 
 	/**
-	 * Liste des avis déposés par le membre
+	 * Liste des avis dï¿½posï¿½s par le membre
 	 */
 	private LinkedList<Avis> avis;
 
 	/**
-	 * Liste des opinions déposés par le membre
+	 * Liste des opinions dï¿½posï¿½s par le membre
 	 */
 	private LinkedList<Opinion> opinions;
 
@@ -43,7 +43,7 @@ public class Member {
 	 * Karma du membre. <br>
 	 * Flottant compris entre 0 et 2.<br>
 	 * Plus les Opinions sur ses Avis sont positifs, plus le karma du membre est
-	 * élevé
+	 * ï¿½levï¿½
 	 */
 	private float karma;
 
@@ -68,13 +68,13 @@ public class Member {
 
 	/**
 	 * Test si le couple pseudo mot de passe correspond au membre.<br>
-	 * Les espaces avant et apres le titre en parametre sont ignorés. La methode
-	 * n'est pas sensible à la casse.
+	 * Les espaces avant et apres le titre en parametre sont ignorï¿½s. La methode
+	 * n'est pas sensible ï¿½ la casse.
 	 * 
 	 * @param pseudo
-	 *            Pseudo à tester
+	 *            Pseudo ï¿½ tester
 	 * @param password
-	 *            Mot de passe à tester
+	 *            Mot de passe ï¿½ tester
 	 * 
 	 * @return Vrai si le couple pseudo mot de passe correspond au membre. <br>
 	 *         Faux si non
@@ -93,7 +93,7 @@ public class Member {
 	 * Verifie si le pseudo est celui du membre.
 	 * 
 	 * @param pseudo
-	 *            Pseudo à tester
+	 *            Pseudo ï¿½ tester
 	 * @return Vrai si le pseudo correspond au membre. <br>
 	 *         Faux si non
 	 */
@@ -102,21 +102,21 @@ public class Member {
 	}
 
 	/**
-	 * Ajoute un avis à la fin de la linkedList avis
+	 * Ajoute un avis ï¿½ la fin de la linkedList avis
 	 * 
 	 * @param avis
-	 *            Avis à ajouter
+	 *            Avis ï¿½ ajouter
 	 */
 	public void addReviewToCollection(Avis avis) {
 		this.avis.addLast(avis);
 	}
 
 	/**
-	 * Renvoi l'avis de l'item passé en parametre
+	 * Renvoi l'avis de l'item passï¿½ en parametre
 	 * 
 	 * @param item
-	 *            Item de réference
-	 * @return Avis concerné par l'item ou null si l'item n'a pas été noté par
+	 *            Item de rï¿½ference
+	 * @return Avis concernï¿½ par l'item ou null si l'item n'a pas ï¿½tï¿½ notï¿½ par
 	 *         ce membre
 	 */
 	public Avis getReview(Item item) {
@@ -133,11 +133,11 @@ public class Member {
 	}
 
 	/**
-	 * Renvoi l'opinion de l'avis passé en paramettre
+	 * Renvoi l'opinion de l'avis passï¿½ en paramettre
 	 * 
 	 * @param avis
-	 *            Avis de réference
-	 * @return Opinion concerné par l'avis ou null si l'avis n'a pas été noté
+	 *            Avis de rï¿½ference
+	 * @return Opinion concernï¿½ par l'avis ou null si l'avis n'a pas ï¿½tï¿½ notï¿½
 	 *         par ce membre
 	 */
 	public Opinion getOpinion(Avis avis) {
@@ -154,18 +154,18 @@ public class Member {
 	}
 
 	/**
-	 * Ajoute une nouvelle Opinion dans la liste des Opinion laissées sur le
+	 * Ajoute une nouvelle Opinion dans la liste des Opinion laissï¿½es sur le
 	 * Membre
 	 * 
 	 * @param opinion
-	 *            Nouvelle Opinion à ajouter
+	 *            Nouvelle Opinion ï¿½ ajouter
 	 */
 	public void addOpinion(Opinion opinion) {
 		this.opinions.addLast(opinion);
 	}
 
 	/**
-	 * Met à jour le Karma d'un Membre à partir des Opinion laissées sur ses
+	 * Met ï¿½ jour le Karma d'un Membre ï¿½ partir des Opinion laissï¿½es sur ses
 	 * Avis
 	 * 
 	 * @return Nouveau karma
@@ -175,7 +175,7 @@ public class Member {
 		int somme = 0;
 
 		/*
-		 * Récuperation de la somme des opinions
+		 * Rï¿½cuperation de la somme des opinions
 		 */
 		System.out.println(opinions.size());
 		while (i < opinions.size()) {
@@ -187,10 +187,10 @@ public class Member {
 		 * Calcul du nouveau karma
 		 */
 		this.karma =
-				(float) ((2 / Math.PI) * (Math.atan(somme / 4.0) + Math.PI / 2));
+				(float) ((2 / Math.PI) * (Math.atan(somme / 18.0) + Math.PI / 2));
 
 		/*
-		 * Mise a jour de la pondération dans les avis
+		 * Mise a jour de la pondï¿½ration dans les avis
 		 */
 		i = 0;
 		while (i < avis.size()) {
